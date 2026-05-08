@@ -16,7 +16,7 @@ const AI_SUGGESTIONS = [
 export default function AnalysisMockup() {
   return (
     <div className="md:col-span-7">
-      <div className="bg-surface-container-lowest border border-outline-variant p-8 shadow-sm h-full">
+      <div className="bg-surface-container-lowest border border-outline-variant p-8 shadow-sm rounded h-full">
         <div className="flex flex-col md:flex-row justify-between gap-8">
           {/* Left panel */}
           <div className="flex-1">

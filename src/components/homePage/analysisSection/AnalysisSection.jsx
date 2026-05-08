@@ -6,7 +6,7 @@ export default function AnalysisSection() {
     <section className="px-margin-page pt-section-padding">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-24">
         {/* Section Header */}
-        <div className="md:col-span-12 mb-12">
+        <div className="md:col-span-12 mb-12 border-l border-primary/20 pl-8">
           <span className="font-mono-label text-mono-label text-primary/40 uppercase block mb-4">
             AI Analysis Preview
           </span>

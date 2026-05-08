@@ -53,9 +53,9 @@ export default function InterviewSection() {
   ];
 
   return (
-    <section className="px-margin-page pb-section-padding">
+    <section className="px-margin-page">
       {/* Section Header */}
-      <div className="mb-20">
+      <div className="mb-20 border-l border-primary/20 pl-8">
         <span className="font-mono-label text-mono-label text-primary/40 uppercase block mb-4">
           AI Interview Preparation
         </span>
@@ -108,7 +108,7 @@ export default function InterviewSection() {
           <h4 className="font-headline-md text-headline-md mb-4 bg-surface-container-lowest/90 px-8 py-4 backdrop-blur-sm">
             Master the technical interview with AI
           </h4>
-          <button className="bg-primary text-on-primary px-10 py-4 font-headline-md hover:scale-105 transition-transform">
+          <button className="bg-primary text-on-primary px-10 py-4 font-headline-md hover:scale-105 transition-transform rounded cursor-pointer">
             Start Preparing Now
           </button>
         </div>

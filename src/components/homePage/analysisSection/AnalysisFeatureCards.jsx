@@ -15,7 +15,7 @@ export default function AnalysisFeatureCards() {
   return (
     <div className="md:col-span-5 flex flex-col gap-card-gap">
       {/* Card 1 */}
-      <div className="p-6 border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+      <div className="p-6 border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-colors rounded">
         <h4 className="font-headline-md text-body-md font-bold mb-2 uppercase tracking-tight">
           AI-Powered Resume Matching
         </h4>
@@ -27,7 +27,7 @@ export default function AnalysisFeatureCards() {
       </div>
 
       {/* Card 2 */}
-      <div className="p-6 border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+      <div className="p-6 border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-colors rounded">
         <h4 className="font-headline-md text-body-md font-bold mb-2 uppercase tracking-tight">
           Skill Gap Detection
         </h4>
@@ -48,7 +48,7 @@ export default function AnalysisFeatureCards() {
       </div>
 
       {/* Card 3 */}
-      <div className="p-6 border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+      <div className="p-6 border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-colors rounded">
         <h4 className="font-headline-md text-body-md font-bold mb-2 uppercase tracking-tight">
           Smart Career Suggestions
         </h4>
