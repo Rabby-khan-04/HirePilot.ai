@@ -6,7 +6,7 @@ import VisualAnchor from "./VisualAnchor";
 export default function PricingSection() {
   return (
     <>
-      <section className="pt-section-padding px-margin-page">
+      <section className="py-section-padding px-margin-page">
         {/* Header */}
         <div className="mb-16 max-w-3xl border-l border-primary/20 pl-8">
           <span className="font-mono-label text-mono-label text-primary/40 uppercase mb-4 block">

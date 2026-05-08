@@ -1,4 +1,5 @@
 import AnalysisSection from "@/components/homePage/analysisSection/AnalysisSection";
+import DashboardSection from "@/components/homePage/dashboardSection/DashboardSection";
 import FeaturesSection from "@/components/homePage/featureSection/Featuressection";
 import HeroSection from "@/components/homePage/heroSection/Herosection";
 import InterviewSection from "@/components/homePage/interviewSection/InterviewSection";
@@ -15,6 +16,7 @@ export default function HomePage() {
       <AnalysisSection />
       <InterviewSection />
       <RoadmapSection />
+      <DashboardSection />
       <PricingSection />
     </main>
   );
