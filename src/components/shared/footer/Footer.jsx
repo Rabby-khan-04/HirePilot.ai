@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-surface dark:bg-surface-dim border-t border-outline-variant/50 dark:border-outline/30 mt-section-padding">
+    <footer className="bg-surface dark:bg-surface-dim border-t border-outline-variant/50 dark:border-outline/30">
       <div className="flex flex-col md:flex-row justify-between items-center px-margin-page py-grid-unit gap-gutter max-w-full mx-auto h-32">
         <div className="font-headline-md text-headline-md text-primary dark:text-on-primary-fixed">
           HirePilot AI

@@ -1,6 +1,8 @@
-import FeaturesSection from "@/components/homePage/Featuressection";
-import HeroSection from "@/components/homePage/Herosection";
-import StatsBar from "@/components/homePage/Statsbar";
+import AnalysisSection from "@/components/homePage/analysisSection/AnalysisSection";
+import FeaturesSection from "@/components/homePage/featureSection/Featuressection";
+import HeroSection from "@/components/homePage/heroSection/Herosection";
+import InterviewSection from "@/components/homePage/interviewSection/InterviewSection";
+import StatsBar from "@/components/homePage/statsbar/Statsbar";
 
 export default function HomePage() {
   return (
@@ -8,6 +10,8 @@ export default function HomePage() {
       <HeroSection />
       <StatsBar />
       <FeaturesSection />
+      <AnalysisSection />
+      <InterviewSection />
     </main>
   );
 }
