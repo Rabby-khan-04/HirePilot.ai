@@ -1,4 +1,9 @@
-import { Geist_Mono, Inter, Playfair_Display } from "next/font/google";
+import {
+  Geist_Mono,
+  Inter,
+  JetBrains_Mono,
+  Playfair_Display,
+} from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -12,9 +17,10 @@ const playfair = Playfair_Display({
   variable: "--font-display",
 });
 
-const geistMono = Geist_Mono({
+const jetBrains_mono = JetBrains_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata = {
@@ -30,12 +36,12 @@ export default function RootLayout({ children }) {
       className={`
         ${inter.variable}
         ${playfair.variable}
-        ${geistMono.variable}
+        ${jetBrains_mono.variable}
         h-full
         antialiased
       `}
     >
-      <body className="min-h-full bg-background text-foreground">
+      <body className="bg-surface text-on-surface font-body-md">
         {children}
       </body>
     </html>
