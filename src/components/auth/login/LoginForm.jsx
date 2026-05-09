@@ -1,37 +1,51 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { LuArrowRight } from "react-icons/lu";
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa6";
+import AuthCard from "../ui/AuthCard";
+import AuthInputField from "../ui/AuthInputField";
+import AuthPasswordField from "../ui/AuthPasswordField";
+import AuthSocialButtons from "../ui/AuthSocialButtons";
 
-function InputField({ id, label, type, placeholder, extra }) {
-  return (
-    <div>
-      <div className="flex justify-between items-center mb-2">
-        <label
-          htmlFor={id}
-          className="font-mono-label text-mono-label text-on-surface-variant uppercase block"
-        >
-          {label}
-        </label>
-        {extra}
-      </div>
-      <input
-        id={id}
-        name={id}
-        type={type}
-        placeholder={placeholder}
-        required
-        className="w-full bg-transparent border-b border-outline-variant focus:border-primary focus:outline-none px-0 py-3 font-mono-detail text-body-md transition-all placeholder:text-outline-variant"
-      />
-    </div>
-  );
+function validate(fields) {
+  console.log(fields);
+  const errors = {};
+  if (!fields.email) errors.email = "Email is required.";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email))
+    errors.email = "Enter a valid email address.";
+  if (!fields.password) errors.password = "Password is required.";
+  return errors;
 }
 
 export default function LoginForm() {
+  const [fields, setFields] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const set = (key) => (e) =>
+    setFields((f) => ({ ...f, [key]: e.target.value }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const errs = validate(fields);
+    if (Object.keys(errs).length) return setErrors(errs);
+    setErrors({});
+    setLoading(true);
+    try {
+      // TODO: call sign-in API / next-auth signIn()
+      console.log(fields.email, fields.password);
+      await new Promise((r) => setTimeout(r, 1000)); // placeholder
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="w-full max-w-110 bg-surface-container-lowest border border-outline-variant p-8 md:p-10 shadow-sm relative z-20">
+    <AuthCard
+      title="Sign In"
+      subtitle="Access your precision-engineered career platform."
+    >
       {/* Mobile brand */}
       <div className="lg:hidden mb-10">
         <span className="font-headline-md text-[24px] font-semibold tracking-tighter text-on-surface">
@@ -39,28 +53,26 @@ export default function LoginForm() {
         </span>
       </div>
 
-      <div className="mb-10 text-center lg:text-left">
-        <h2 className="font-headline-md text-headline-md mb-2">Sign In</h2>
-        <p className="font-body-md text-on-surface-variant">
-          Access your precision-engineered career platform.
-        </p>
-      </div>
-
-      <form className="space-y-6" action="#">
-        <InputField
+      <form onSubmit={handleSubmit} noValidate className="space-y-6">
+        <AuthInputField
           id="email"
           label="Email Address"
           type="email"
           placeholder="dev@hirepilot.ai"
+          error={errors.email}
+          value={fields.email}
+          onChange={set("email")}
         />
-        <InputField
+        <AuthPasswordField
           id="password"
           label="Password"
-          type="password"
           placeholder="••••••••"
+          error={errors.password}
+          value={fields.password}
+          onChange={set("password")}
           extra={
             <Link
-              href="#"
+              href="/forgot-password"
               className="font-mono-detail text-mono-detail text-primary hover:underline"
             >
               Forgot Password?
@@ -84,50 +96,26 @@ export default function LoginForm() {
           </label>
         </div>
 
-        {/* Submit */}
         <button
           type="submit"
-          className="w-full py-4 bg-primary text-on-primary font-headline-md text-[16px] hover:bg-primary-container hover:text-on-primary transition-all flex items-center justify-center gap-2 group"
+          disabled={loading}
+          className="w-full py-4 bg-primary text-on-primary font-headline-md text-[16px] hover:bg-primary-container hover:text-on-primary transition-all flex items-center justify-center gap-2 group disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          Sign In
-          <LuArrowRight
-            size={18}
-            className="group-hover:translate-x-1 transition-transform"
-          />
+          {loading ? "Signing in..." : "Sign In"}
+          {!loading && (
+            <LuArrowRight
+              size={18}
+              className="group-hover:translate-x-1 transition-transform"
+            />
+          )}
         </button>
 
-        {/* Divider */}
-        <div className="relative flex py-4 items-center">
-          <div className="grow border-t border-outline-variant" />
-          <span className="shrink mx-4 font-mono-label text-mono-label text-on-surface-variant uppercase">
-            or continue with
-          </span>
-          <div className="grow border-t border-outline-variant" />
-        </div>
-
-        {/* Social buttons */}
-        <div className="grid grid-cols-2 gap-card-gap">
-          {[
-            { label: "Google", icon: <FcGoogle /> },
-            { label: "GitHub", icon: <FaGithub /> },
-          ].map(({ label, icon }) => (
-            <button
-              key={label}
-              type="button"
-              className="flex items-center justify-center gap-3 py-3 border border-outline-variant hover:bg-surface-container transition-colors group"
-            >
-              <span className="group-hover:scale-105 transition-transform">
-                {icon}
-              </span>
-              <span className="font-body-md font-medium">{label}</span>
-            </button>
-          ))}
-        </div>
+        <AuthSocialButtons />
       </form>
 
       <div className="mt-10 pt-6 border-t border-outline-variant text-center">
         <p className="font-body-md text-on-surface-variant">
-          Don{"'"}t have an account?
+          Don{"'"}t have an account?{" "}
           <Link
             href="/register"
             className="text-primary font-semibold hover:underline ml-1"
@@ -136,6 +124,6 @@ export default function LoginForm() {
           </Link>
         </p>
       </div>
-    </div>
+    </AuthCard>
   );
 }

@@ -1,5 +1,4 @@
 import { FEATURES } from "@/data/loginData";
-import Image from "next/image";
 
 function FeatureItem({ icon: Icon, label, title }) {
   return (
@@ -32,7 +31,7 @@ export default function LoginMarketing() {
         <div className="w-1/4 border-r border-white/5 h-full" />
       </div>
 
-      <div className="relative z-10 max-w-xl">
+      <div className="relative z-10">
         {/* Brand */}
         <div className="mb-12">
           <span className="font-headline-md text-headline-md font-semibold tracking-tighter text-on-primary">
