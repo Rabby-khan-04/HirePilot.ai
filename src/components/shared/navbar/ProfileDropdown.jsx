@@ -15,13 +15,11 @@ import ProfileUserInfo from "./ProfileUserInfo";
 import ProfileNavItems from "./ProfileNavItems";
 import ProfileLogout from "./ProfileLogout";
 import Image from "next/image";
-
-// Replace with your actual auth hook e.g. useSession from next-auth
-const MOCK_USER = { name: "Rabby Khan", role: "Frontend Developer" };
+import { logout } from "@/services/auth.service";
 
 export default function ProfileDropdown({ user }) {
-  const handleLogout = () => {
-    // TODO: call signOut() from next-auth or your auth provider
+  const handleLogout = async () => {
+    await logout();
   };
 
   return (
