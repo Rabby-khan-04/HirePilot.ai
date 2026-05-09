@@ -6,6 +6,7 @@ import InterviewSection from "@/components/homePage/interviewSection/InterviewSe
 import PricingSection from "@/components/homePage/pricingSection/PricingSection";
 import RoadmapSection from "@/components/homePage/roadmapSection/RoadmapSection";
 import StatsBar from "@/components/homePage/statsbar/Statsbar";
+import TestimonialsSection from "@/components/homePage/testimonialSection/TestimonialsSection";
 
 export default function HomePage() {
   return (
@@ -18,6 +19,7 @@ export default function HomePage() {
       <RoadmapSection />
       <DashboardSection />
       <PricingSection />
+      <TestimonialsSection />
     </main>
   );
 }
