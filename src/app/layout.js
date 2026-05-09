@@ -1,10 +1,6 @@
-import {
-  Geist_Mono,
-  Inter,
-  JetBrains_Mono,
-  Playfair_Display,
-} from "next/font/google";
+import { Inter, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import AuthProvider from "@/provider/AuthProvider";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -42,7 +38,7 @@ export default function RootLayout({ children }) {
       `}
     >
       <body className="bg-surface text-on-surface font-body-md">
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
