@@ -2,21 +2,30 @@
 
 import { authClient } from "@/lib/client/api-client";
 import { useUserStore } from "@/store/userStore";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 export const useInitAuth = () => {
   const { setUser, clearUser } = useUserStore();
 
-  useEffect(() => {
-    const initAuth = async () => {
-      try {
-        const res = await authClient.get("/users/user");
-        setUser(res.data.data);
-      } catch {
-        clearUser();
-      }
-    };
+  const { data, isError } = useQuery({
+    queryKey: ["auth-user"],
+    queryFn: async () => {
+      const res = await authClient.get("/users/user");
+      return res.data.data;
+    },
+    retry: false,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
 
-    initAuth();
-  }, [clearUser, setUser]);
+  useEffect(() => {
+    if (data) setUser(data);
+  }, [data, setUser]);
+
+  useEffect(() => {
+    if (isError) clearUser();
+  }, [clearUser, isError]);
 };

@@ -9,8 +9,11 @@ import AuthInputField from "../ui/AuthInputField";
 import AuthPasswordField from "../ui/AuthPasswordField";
 import AuthSocialButtons from "../ui/AuthSocialButtons";
 import { loginSchema } from "@/lib/validations/auth.validation";
+import { useLogin } from "@/hooks/useLogin";
 
 export default function LoginForm() {
+  const { mutate, isPending, isError } = useLogin();
+
   const {
     register,
     handleSubmit,
@@ -19,9 +22,7 @@ export default function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const onSubmit = (data) => mutate(data);
 
   return (
     <AuthCard
@@ -76,24 +77,24 @@ export default function LoginForm() {
           </label>
         </div>
 
-        {/* {isError && (
+        {isError && (
           <p className="font-mono-detail text-[11px] text-error text-center">
             Invalid email or password. Please try again.
           </p>
-        )} */}
+        )}
 
         <button
           type="submit"
-          // disabled={isPending}
+          disabled={isPending}
           className="w-full py-4 bg-primary text-on-primary font-headline-md text-[16px] hover:bg-primary-container hover:text-on-primary transition-all flex items-center justify-center gap-2 group disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {/* {isPending ? "Signing in..." : "Sign In"}
+          {isPending ? "Signing in..." : "Sign In"}
           {!isPending && (
             <LuArrowRight
               size={18}
               className="group-hover:translate-x-1 transition-transform"
             />
-          )} */}
+          )}
         </button>
 
         <AuthSocialButtons />

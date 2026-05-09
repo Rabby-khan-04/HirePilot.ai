@@ -7,6 +7,7 @@ export const publicClient = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 export const authClient = axios.create({
@@ -54,7 +55,7 @@ authClient.interceptors.response.use(
         return authClient(originalRequest);
       } catch (err) {
         processQueue(err);
-        if (typeof window !== "undefined") window.location.href = "/login";
+        // if (typeof window !== "undefined") window.location.href = "/login";
         return Promise.reject(err);
       } finally {
         isRefreshing = false;

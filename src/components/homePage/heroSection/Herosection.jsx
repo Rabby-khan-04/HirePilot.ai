@@ -1,3 +1,4 @@
+import { useUserStore } from "@/store/userStore";
 import ResumeBentoGrid from "./ResumeBentoGrid";
 import { IoArrowForwardOutline } from "react-icons/io5";
 
