@@ -8,8 +8,10 @@ import AuthInputField from "../ui/AuthInputField";
 import AuthPasswordField from "../ui/AuthPasswordField";
 import AuthSocialButtons from "../ui/AuthSocialButtons";
 import { registerSchema } from "@/lib/validations/auth.validation";
+import { useRegister } from "@/hooks/auth/useRegister";
 
 export default function RegisterForm() {
+  const { mutate, isPending, isError } = useRegister();
   const {
     register,
     handleSubmit,
@@ -19,7 +21,13 @@ export default function RegisterForm() {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    const payload = {
+      name: data.name,
+      email: data.email,
+      avatar: data.avatar,
+      password: data.password,
+    };
+    mutate(payload);
   };
 
   return (
@@ -97,18 +105,18 @@ export default function RegisterForm() {
           )}
         </div>
 
-        {/* {isError && (
+        {isError && (
           <p className="font-mono-detail text-[11px] text-error text-center">
             Registration failed. Please try again.
           </p>
-        )} */}
+        )}
 
         <button
           type="submit"
-          // disabled={isPending}
+          disabled={isPending}
           className="w-full bg-primary text-on-primary py-4 font-headline-md text-[16px] hover:bg-primary-container hover:text-on-primary transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {/* {isPending ? "Creating account..." : "Create Account"} */}
+          {isPending ? "Creating account..." : "Create Account"}
         </button>
 
         <AuthSocialButtons />

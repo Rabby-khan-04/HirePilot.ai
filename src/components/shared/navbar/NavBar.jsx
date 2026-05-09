@@ -1,52 +1,80 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { LuMenu } from "react-icons/lu";
+import { NAV_LINKS } from "@/data/navbarData";
+import ProfileDropdown from "./ProfileDropdown";
+import MobileMenu from "./MobileMenu";
+import { useUserStore } from "@/store/userStore";
 
-const NAV_LINKS = [
-  { label: "Features", href: "/features" },
-  { label: "How it works", href: "/how-it-works" },
-  { label: "Pricing", href: "/pricing" },
-];
+export default function Navbar() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { user, isLoading, isAuthenticated } = useUserStore();
 
-const NavBar = () => {
   return (
-    <nav className="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-container-high/80 backdrop-blur-md border-b border-outline-variant/30 dark:border-outline/20">
-      <div className="flex justify-between items-center px-margin-page py-4 max-w-full mx-auto">
-        <Link
-          href="/"
-          className="text-headline-md font-headline-md font-bold tracking-tight text-primary dark:text-on-primary-fixed"
-        >
-          HirePilot AI
-        </Link>
-
-        <div className="hidden md:flex gap-gutter items-center">
-          {NAV_LINKS.map(({ label, href }) => (
-            <Link
-              key={label}
-              href={href}
-              className="font-mono-label text-mono-label text-on-surface-variant hover:text-primary transition-colors duration-200"
-            >
-              {label}
-            </Link>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-4">
+    <>
+      <nav className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30">
+        <div className="flex justify-between items-center px-margin-page py-4">
+          {/* Brand */}
           <Link
-            href="/login"
-            className="font-mono-label text-mono-label text-on-surface-variant hover:text-primary px-4 py-2"
+            href="/"
+            className="font-headline-md text-headline-md font-bold tracking-tight text-primary"
           >
-            Sign in
+            HirePilot AI
           </Link>
 
-          <Link
-            href="/register"
-            className="bg-primary text-on-primary font-mono-label text-mono-label px-6 py-2.5 rounded hover:opacity-90 active:scale-95 transition-all"
+          {/* Desktop links */}
+          <div className="hidden md:flex gap-gutter items-center">
+            {NAV_LINKS.map(({ label, href }) => (
+              <Link
+                key={label}
+                href={href}
+                className="font-mono-label text-mono-label text-on-surface-variant hover:text-primary transition-colors duration-200"
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Desktop right actions */}
+          <div className="hidden md:flex items-center gap-4">
+            {isAuthenticated ? (
+              <ProfileDropdown user={user} />
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="font-mono-label text-mono-label text-on-surface-variant hover:text-primary px-4 py-2 transition-colors"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/register"
+                  className="bg-primary text-on-primary font-mono-label text-mono-label px-6 py-2.5 hover:opacity-90 active:scale-95 transition-all"
+                >
+                  Get Started Free
+                </Link>
+              </>
+            )}
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMobileOpen(true)}
+            aria-label="Open menu"
+            className="md:hidden p-2 text-on-surface-variant hover:text-primary transition-colors"
           >
-            Get Started Free
-          </Link>
+            <LuMenu size={22} />
+          </button>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      <MobileMenu
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        isAuthenticated={isAuthenticated}
+      />
+    </>
   );
-};
-
-export default NavBar;
+}

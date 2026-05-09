@@ -1,6 +1,6 @@
 "use client";
 
-import { useInitAuth } from "@/hooks/useInitUser";
+import { useInitAuth } from "@/hooks/auth/useInitUser";
 
 export default function AuthProvider({ children }) {
   useInitAuth();

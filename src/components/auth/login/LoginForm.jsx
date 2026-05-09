@@ -9,7 +9,7 @@ import AuthInputField from "../ui/AuthInputField";
 import AuthPasswordField from "../ui/AuthPasswordField";
 import AuthSocialButtons from "../ui/AuthSocialButtons";
 import { loginSchema } from "@/lib/validations/auth.validation";
-import { useLogin } from "@/hooks/useLogin";
+import { useLogin } from "@/hooks/auth/useLogin";
 
 export default function LoginForm() {
   const { mutate, isPending, isError } = useLogin();
