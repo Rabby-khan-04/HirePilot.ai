@@ -1,5 +1,6 @@
 import AnalysisSection from "@/components/homePage/analysisSection/AnalysisSection";
 import DashboardSection from "@/components/homePage/dashboardSection/DashboardSection";
+import FaqSection from "@/components/homePage/faqSection/FaqSection";
 import FeaturesSection from "@/components/homePage/featureSection/Featuressection";
 import HeroSection from "@/components/homePage/heroSection/Herosection";
 import InterviewSection from "@/components/homePage/interviewSection/InterviewSection";
@@ -20,6 +21,7 @@ export default function HomePage() {
       <DashboardSection />
       <PricingSection />
       <TestimonialsSection />
+      <FaqSection />
     </main>
   );
 }

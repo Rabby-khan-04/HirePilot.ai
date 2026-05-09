@@ -3,7 +3,7 @@ import TestimonialCard from "./TestimonialCard";
 
 export default function TestimonialsSection() {
   return (
-    <section className="px-margin-page py-section-padding border-b border-outline-variant">
+    <section className="px-margin-page py-section-padding">
       {/* Header */}
       <div className="mb-16 max-w-3xl border-l border-primary/20 pl-8">
         <span className="font-mono-label text-mono-label text-primary/40 uppercase mb-4 block">

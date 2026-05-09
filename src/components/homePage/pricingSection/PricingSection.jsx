@@ -8,7 +8,7 @@ export default function PricingSection() {
     <>
       <section className="py-section-padding px-margin-page">
         {/* Header */}
-        <div className="mb-16 max-w-3xl border-l border-primary/20 pl-8">
+        <div className="mb-24 max-w-3xl border-l border-primary/20 pl-8">
           <span className="font-mono-label text-mono-label text-primary/40 uppercase mb-4 block">
             Preparation Tiers
           </span>

@@ -4,7 +4,7 @@ import InfrastructureImg from "@/../public/assets/image/infrastructure.png";
 export default function VisualAnchor() {
   return (
     <section className="px-margin-page mb-section-padding">
-      <div className="relative h-100 w-full overflow-hidden border border-outline-variant grayscale hover:grayscale-0 transition-all duration-700">
+      <div className="relative h-100 w-full overflow-hidden border border-outline-variant grayscale hover:grayscale-0 transition-all duration-700 rounded">
         <Image
           src={InfrastructureImg}
           alt="High-tech server room representing HirePilot AI infrastructure"

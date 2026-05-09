@@ -4,54 +4,13 @@ import Image from "next/image";
 import MeetingSpaceImg from "@/../public/assets/image/meeting_space.png";
 import { LuTerminal } from "react-icons/lu";
 import { MdPsychology } from "react-icons/md";
+import {
+  BEHAVIORAL_QUESTIONS,
+  BOTTOM_FEATURES,
+  TECHNICAL_QUESTIONS,
+} from "@/data/interviewMockData";
 
 export default function InterviewSection() {
-  const TECHNICAL_QUESTIONS = [
-    {
-      id: "Q1",
-      question:
-        "Explain the difference between authentication and authorization.",
-      intent:
-        "To verify the candidate understands fundamental security principles and the distinction between identity and permissions.",
-      answer:
-        "Authentication is confirming who a user is (e.g., login credentials), while authorization is determining what they're allowed to do (e.g., admin vs. guest roles).",
-    },
-    {
-      id: "Q2",
-      question: "What problem does useEffect solve in React?",
-      intent:
-        "To assess the candidate's mastery of React's lifecycle and side-effect management in functional components.",
-      answer:
-        "useEffect allows functional components to perform side effects—like data fetching or subscriptions—that were previously handled in lifecycle methods like componentDidMount.",
-    },
-  ];
-
-  const BEHAVIORAL_QUESTIONS = [
-    {
-      id: "Q1",
-      question: "Tell me about a time you solved a difficult bug.",
-      intent:
-        "To observe problem-solving methodology, persistence, and the ability to articulate technical challenges to others.",
-      answer:
-        "Use the STAR method: Describe a race condition in the checkout flow, explain the logging tools used to isolate it, and highlight the architectural fix that prevented recurrence.",
-    },
-    {
-      id: "Q2",
-      question: "How do you handle tight deadlines during a project?",
-      intent:
-        "To evaluate time management skills, prioritization under pressure, and communication with stakeholders during crunch periods.",
-      answer:
-        "Focus on ruthless prioritization and transparency. Explain how you break down tasks and communicate early if a deliverable's scope needs adjustment to meet the core deadline.",
-    },
-  ];
-
-  const BOTTOM_FEATURES = [
-    "Personalized interview preparation",
-    "Technical and behavioral questions",
-    "AI-generated answer guidance",
-    "Role-specific preparation flow",
-  ];
-
   return (
     <section className="px-margin-page">
       {/* Section Header */}
@@ -98,14 +57,14 @@ export default function InterviewSection() {
       </div>
 
       {/* CTA Image Area */}
-      <div className="mt-24 relative aspect-21/9 overflow-hidden bg-surface-container border border-outline-variant">
+      <div className="mt-24 relative aspect-21/9 overflow-hidden bg-surface-container border border-outline-variant rounded">
         <Image
           src={MeetingSpaceImg}
           alt="Software developers in a minimalist meeting space"
           className="w-full h-full object-cover grayscale opacity-80 mix-blend-multiply"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 bg-linear-to-t from-inverse-surface/20 to-transparent">
-          <h4 className="font-headline-md text-headline-md mb-4 bg-surface-container-lowest/90 px-8 py-4 backdrop-blur-sm">
+          <h4 className="font-headline-md text-headline-md mb-4 bg-surface-container-lowest/90 px-8 py-4 backdrop-blur-sm rounded">
             Master the technical interview with AI
           </h4>
           <button className="bg-primary text-on-primary px-10 py-4 font-headline-md hover:scale-105 transition-transform rounded cursor-pointer">
