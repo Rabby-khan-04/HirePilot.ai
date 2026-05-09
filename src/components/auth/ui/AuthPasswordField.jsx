@@ -1,16 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 
-export default function AuthPasswordField({
-  id,
-  label,
-  placeholder,
-  extra,
-  error,
-  onChange,
-}) {
+const AuthPasswordField = forwardRef(function AuthPasswordField(
+  { id, label, placeholder, extra, error, ...rest },
+  ref,
+) {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -28,11 +24,12 @@ export default function AuthPasswordField({
         <input
           id={id}
           name={id}
+          ref={ref}
           type={visible ? "text" : "password"}
           placeholder={placeholder}
-          onChange={onChange}
           aria-invalid={!!error}
           aria-describedby={error ? `${id}-error` : undefined}
+          {...rest}
           className={`w-full bg-transparent border-b px-0 py-3 pr-8 font-mono-detail text-body-md transition-all placeholder:text-outline-variant focus:outline-none ${
             error
               ? "border-error focus:border-error"
@@ -58,4 +55,6 @@ export default function AuthPasswordField({
       )}
     </div>
   );
-}
+});
+
+export default AuthPasswordField;

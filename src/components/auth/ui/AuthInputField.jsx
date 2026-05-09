@@ -1,12 +1,9 @@
-export default function AuthInputField({
-  id,
-  label,
-  type = "text",
-  placeholder,
-  extra,
-  error,
-  onChange,
-}) {
+import { forwardRef } from "react";
+
+const AuthInputField = forwardRef(function AuthInputField(
+  { id, label, type = "text", placeholder, extra, error, ...rest }, // ← add ...rest
+  ref,
+) {
   return (
     <div>
       <div className="flex justify-between items-center mb-2">
@@ -20,12 +17,12 @@ export default function AuthInputField({
       </div>
       <input
         id={id}
-        name={id}
         type={type}
+        ref={ref}
         placeholder={placeholder}
         aria-invalid={!!error}
-        onChange={onChange}
         aria-describedby={error ? `${id}-error` : undefined}
+        {...rest} // ← spread rest onto input — passes onChange, onBlur, name
         className={`w-full bg-transparent border-b px-0 py-3 font-mono-detail text-body-md transition-all placeholder:text-outline-variant focus:outline-none ${
           error
             ? "border-error focus:border-error"
@@ -42,4 +39,6 @@ export default function AuthInputField({
       )}
     </div>
   );
-}
+});
+
+export default AuthInputField;

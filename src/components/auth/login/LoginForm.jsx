@@ -1,44 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { LuArrowRight } from "react-icons/lu";
 import AuthCard from "../ui/AuthCard";
 import AuthInputField from "../ui/AuthInputField";
 import AuthPasswordField from "../ui/AuthPasswordField";
 import AuthSocialButtons from "../ui/AuthSocialButtons";
-
-function validate(fields) {
-  console.log(fields);
-  const errors = {};
-  if (!fields.email) errors.email = "Email is required.";
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email))
-    errors.email = "Enter a valid email address.";
-  if (!fields.password) errors.password = "Password is required.";
-  return errors;
-}
+import { loginSchema } from "@/lib/validations/auth.validation";
 
 export default function LoginForm() {
-  const [fields, setFields] = useState({ email: "", password: "" });
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+  });
 
-  const set = (key) => (e) =>
-    setFields((f) => ({ ...f, [key]: e.target.value }));
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const errs = validate(fields);
-    if (Object.keys(errs).length) return setErrors(errs);
-    setErrors({});
-    setLoading(true);
-    try {
-      // TODO: call sign-in API / next-auth signIn()
-      console.log(fields.email, fields.password);
-      await new Promise((r) => setTimeout(r, 1000)); // placeholder
-    } finally {
-      setLoading(false);
-    }
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
   return (
@@ -53,23 +35,20 @@ export default function LoginForm() {
         </span>
       </div>
 
-      <form onSubmit={handleSubmit} noValidate className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
         <AuthInputField
           id="email"
           label="Email Address"
           type="email"
           placeholder="dev@hirepilot.ai"
-          error={errors.email}
-          value={fields.email}
-          onChange={set("email")}
+          error={errors.email?.message}
+          {...register("email")}
         />
         <AuthPasswordField
           id="password"
           label="Password"
           placeholder="••••••••"
-          error={errors.password}
-          value={fields.password}
-          onChange={set("password")}
+          error={errors.password?.message}
           extra={
             <Link
               href="/forgot-password"
@@ -78,6 +57,7 @@ export default function LoginForm() {
               Forgot Password?
             </Link>
           }
+          {...register("password")}
         />
 
         {/* Remember me */}
@@ -96,18 +76,24 @@ export default function LoginForm() {
           </label>
         </div>
 
+        {/* {isError && (
+          <p className="font-mono-detail text-[11px] text-error text-center">
+            Invalid email or password. Please try again.
+          </p>
+        )} */}
+
         <button
           type="submit"
-          disabled={loading}
+          // disabled={isPending}
           className="w-full py-4 bg-primary text-on-primary font-headline-md text-[16px] hover:bg-primary-container hover:text-on-primary transition-all flex items-center justify-center gap-2 group disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {loading ? "Signing in..." : "Sign In"}
-          {!loading && (
+          {/* {isPending ? "Signing in..." : "Sign In"}
+          {!isPending && (
             <LuArrowRight
               size={18}
               className="group-hover:translate-x-1 transition-transform"
             />
-          )}
+          )} */}
         </button>
 
         <AuthSocialButtons />
