@@ -182,10 +182,10 @@ export function WorkflowActions({
 export function AIStatusLoader({ message = "AI is processing..." }) {
   return (
     <div className="flex flex-col items-center justify-center gap-6 py-20 ">
-      <div className="relative w-16 h-16 rounded overflow-hidden">
-        <div className="absolute inset-0 border-2 border-primary/20" />
-        <div className="absolute inset-0 border-2 border-primary border-t-transparent animate-spin" />
-        <div className="absolute inset-0 flex items-center justify-center">
+      <div className="relative w-16 h-16">
+        <div className="absolute inset-0 border-2 border-primary/20 rounded" />
+        <div className="absolute inset-0 border-2 border-primary border-t-transparent animate-spin rounded" />
+        <div className="absolute inset-0 flex items-center justify-center rounded">
           <MdAutoAwesome size={24} className="text-primary" />
         </div>
       </div>

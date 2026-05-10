@@ -1,15 +1,19 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+const initialState = {
+  activeStep: 1,
+  completedSteps: [],
+  resume: null,
+  jobProfile: null,
+  analysis: null,
+  roadmap: null,
+};
+
 export const useWorkflowStore = create(
   persist(
     (set, get) => ({
-      activeStep: 1,
-      completedSteps: [],
-      resume: null,
-      jobProfile: null,
-      analysis: null,
-      roadmap: null,
+      ...initialState,
 
       goToStep: (step) => set({ activeStep: step }),
 
@@ -48,18 +52,12 @@ export const useWorkflowStore = create(
         set({
           activeStep: 1,
           completedSteps: [],
-          resume: null,
-          jobProfile: null,
-          analysis: null,
-          roadmap: null,
         }),
     }),
     {
-      name: "hirepilot-workflow", // localStorage key
-      partialState: (s) => ({
-        // don't persist loading/UI state
-        activeStep: s.activeStep,
-        completedSteps: s.completedSteps,
+      name: "hirepilot-workflow",
+
+      partialize: (s) => ({
         resume: s.resume,
         jobProfile: s.jobProfile,
         analysis: s.analysis,

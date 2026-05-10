@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useWorkflowStore } from "@/store/workflowStore";
 import WorkflowStepper from "./WorkflowStepper";
 import ResumeStep from "./ResumeStep";
@@ -20,7 +21,7 @@ export default function CareerAnalysisWorkflow() {
 
   return (
     <section className="flex-1 px-margin-page py-section-padding">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <WorkflowStepper />
         <ActiveStepComponent />
       </div>

@@ -16,7 +16,7 @@ export default function WorkflowStepper() {
 
   return (
     <div className="flex justify-between items-center mb-16 relative max-w-4xl mx-auto">
-      <div className="absolute top-5 left-0 w-full h-px bg-outline-variant/30 -z-10" />
+      <div className="absolute top-5 left-0 w-full h-px bg-outline-variant/80 z-1" />
 
       {STEPS.map(({ id, label }) => {
         const isCompleted = completedSteps.includes(id);
@@ -28,8 +28,8 @@ export default function WorkflowStepper() {
             key={id}
             onClick={() => isAccessible && goToStep(id)}
             disabled={!isAccessible}
-            className={`flex flex-col items-center gap-3 bg-background px-4 transition-opacity ${
-              !isAccessible ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+            className={`flex flex-col items-center gap-3 bg-surface px-4 transition-opacity relative z-10 ${
+              !isAccessible ? "opacity-90 cursor-not-allowed" : "cursor-pointer"
             }`}
           >
             {/* Circle */}

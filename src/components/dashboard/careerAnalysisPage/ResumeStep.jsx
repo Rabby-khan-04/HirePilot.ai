@@ -18,6 +18,7 @@ import {
 } from "react-icons/lu";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import { RiUploadCloud2Line } from "react-icons/ri";
+import toast from "react-hot-toast";
 
 const INFO_CARDS = [
   {
@@ -207,7 +208,7 @@ function DropZone({ file, onFile }) {
       <input
         ref={inputRef}
         type="file"
-        accept=".pdf,.docx,.txt"
+        accept=".pdf"
         className="hidden"
         onChange={(e) => onFile(e.target.files?.[0])}
       />
@@ -255,6 +256,12 @@ export default function ResumeStep() {
 
   const handleUpload = async () => {
     if (!file) return;
+
+    if (file.type !== "application/pdf") {
+      toast.error("Please upload a PDF file!!");
+      return;
+    }
+
     setStatus("uploading");
     try {
       // Step 1: Upload to Cloudinary
