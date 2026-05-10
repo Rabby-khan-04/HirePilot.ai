@@ -1,7 +1,7 @@
 "use client";
 
-import { useWorkflowStore } from "@/store/workflowStore";
 import { useState, useRef } from "react";
+import { useWorkflowStore } from "@/store/workflowStore";
 import {
   AIStatusLoader,
   SectionHeader,
@@ -9,11 +9,15 @@ import {
   WorkflowActions,
 } from "./ui";
 import {
-  MdOutlineVerifiedUser,
-  MdArrowForward,
-  MdOutlineTask,
-  MdOutlineUploadFile,
-} from "react-icons/md";
+  LuFileCheck,
+  LuShieldCheck,
+  LuRefreshCw,
+  LuBriefcase,
+  LuCode,
+  LuArrowRight,
+} from "react-icons/lu";
+import { MdOutlineVerifiedUser } from "react-icons/md";
+import { RiUploadCloud2Line } from "react-icons/ri";
 
 const INFO_CARDS = [
   {
@@ -36,41 +40,276 @@ const INFO_CARDS = [
   },
 ];
 
-export default function ResumeStep() {
-  const { setResume } = useWorkflowStore();
-  const [isDragging, setIsDragging] = useState(false);
-  const [file, setFile] = useState(null);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const inputRef = useRef(null);
+// ─── ParsedResumeView ──────────────────────────────────────────────────────────
+function ParsedResumeView({ parsedData, onContinue, onRetry }) {
+  const { skills = [], experience = [], projects = [] } = parsedData;
 
-  const handleFile = (f) => {
-    if (!f) return;
-    setFile(f);
-  };
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <LuFileCheck size={20} className="text-primary" />
+          <h3 className="font-headline-md text-headline-md text-primary">
+            Resume Parsed Successfully
+          </h3>
+        </div>
+        <button
+          onClick={onRetry}
+          className="flex items-center gap-2 font-mono-label text-mono-label text-on-surface-variant hover:text-primary transition-colors"
+        >
+          <LuRefreshCw size={14} />
+          Upload different file
+        </button>
+      </div>
+
+      {/* Skills */}
+      <div className="bg-surface-container-lowest border border-outline-variant/30 p-6 rounded">
+        <div className="flex items-center gap-2 mb-4">
+          <LuCode size={16} className="text-primary" />
+          <span className="font-mono-label text-mono-label uppercase text-on-surface-variant">
+            Skills
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {skills.map((s) => (
+            <span
+              key={s}
+              className="px-3 py-1 bg-surface-container font-mono-detail text-mono-detail text-on-surface border border-outline-variant/30"
+            >
+              {s}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Experience */}
+      {experience.length > 0 && (
+        <div className="bg-surface-container-lowest border border-outline-variant/30 p-6 space-y-4 rounded">
+          <div className="flex items-center gap-2 mb-2">
+            <LuBriefcase size={16} className="text-primary" />
+            <span className="font-mono-label text-mono-label uppercase text-on-surface-variant">
+              Experience
+            </span>
+          </div>
+          {experience.map((exp, i) => (
+            <div
+              key={i}
+              className="border-l-2 border-outline-variant/30 pl-4 space-y-1"
+            >
+              <p className="font-body-md font-semibold text-on-surface">
+                {exp.role}
+              </p>
+              <p className="font-mono-detail text-mono-detail text-on-surface-variant">
+                {exp.company}
+              </p>
+              {exp.description?.map((d, j) => (
+                <p
+                  key={j}
+                  className="text-body-md text-on-surface-variant text-sm"
+                >
+                  • {d}
+                </p>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Projects */}
+      {projects.length > 0 && (
+        <div className="bg-surface-container-lowest border border-outline-variant/30 p-6 space-y-4 rounded">
+          <span className="font-mono-label text-mono-label uppercase text-on-surface-variant block mb-2">
+            Projects
+          </span>
+          {projects.map((p, i) => (
+            <div key={i} className="space-y-1">
+              <p className="font-body-md font-semibold text-on-surface">
+                {p.name}
+              </p>
+              <p className="text-body-md text-on-surface-variant text-sm">
+                {p.description}
+              </p>
+              <div className="flex flex-wrap gap-1 mt-1">
+                {p.techStack?.map((t) => (
+                  <span
+                    key={t}
+                    className="px-2 py-0.5 bg-surface-container font-mono-detail text-[10px] text-on-surface-variant"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <WorkflowActions
+        nextLabel="Continue to Job Profile"
+        nextIcon={LuArrowRight}
+        onNext={onContinue}
+      />
+    </div>
+  );
+}
+
+// ─── ParseFailedView ───────────────────────────────────────────────────────────
+function ParseFailedView({ onRetry }) {
+  return (
+    <div className="flex flex-col items-center gap-6 py-16 text-center">
+      <LuShieldCheck size={48} className="text-error/40" />
+      <div className="space-y-2">
+        <h3 className="font-headline-md text-headline-md text-error">
+          Parsing Failed
+        </h3>
+        <p className="text-on-surface-variant text-body-md max-w-sm">
+          We couldn{"'"}t extract data from your resume. Please try a different
+          file or format.
+        </p>
+      </div>
+      <button
+        onClick={onRetry}
+        className="flex items-center gap-2 px-8 py-3 border border-primary text-primary font-mono-label text-mono-label hover:bg-surface-container transition-colors"
+      >
+        <LuRefreshCw size={16} />
+        Try Again
+      </button>
+    </div>
+  );
+}
+
+// ─── DropZone ──────────────────────────────────────────────────────────────────
+function DropZone({ file, onFile }) {
+  const [isDragging, setIsDragging] = useState(false);
+  const inputRef = useRef(null);
 
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
-    handleFile(e.dataTransfer.files[0]);
+    onFile(e.dataTransfer.files[0]);
   };
 
-  const handleContinue = async () => {
+  return (
+    <div
+      onDragOver={(e) => {
+        e.preventDefault();
+        setIsDragging(true);
+      }}
+      onDragLeave={() => setIsDragging(false)}
+      onDrop={handleDrop}
+      onClick={() => inputRef.current?.click()}
+      className={`mt-4 border-2 border-dashed p-16 cursor-pointer transition-all duration-300 rounded ${
+        isDragging || file
+          ? "border-primary bg-surface-container-low"
+          : "border-outline-variant/50 hover:border-primary/50 hover:bg-surface-container-low"
+      } `}
+    >
+      <input
+        ref={inputRef}
+        type="file"
+        accept=".pdf,.docx,.txt"
+        className="hidden"
+        onChange={(e) => onFile(e.target.files?.[0])}
+      />
+      <div className="flex flex-col items-center gap-6">
+        <div className="w-20 h-20 bg-surface-container-high flex items-center justify-center rounded">
+          {file ? (
+            <LuFileCheck size={40} className="text-primary" />
+          ) : (
+            <RiUploadCloud2Line size={40} className="text-primary" />
+          )}
+        </div>
+        <div className="space-y-2 text-center">
+          {file ? (
+            <>
+              <p className="font-headline-md text-[20px] text-primary">
+                {file.name}
+              </p>
+              <p className="font-mono-detail text-mono-detail text-on-surface-variant">
+                Click to change file
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="font-headline-md text-[24px] text-primary">
+                Drop resume here or{" "}
+                <span className="underline">browse files</span>
+              </p>
+              <p className="font-mono-detail text-mono-detail text-on-surface-variant uppercase">
+                Max file size 10MB • Secure encrypted upload
+              </p>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── ResumeStep ────────────────────────────────────────────────────────────────
+export default function ResumeStep() {
+  const { setResume } = useWorkflowStore();
+  const [file, setFile] = useState(null);
+  const [status, setStatus] = useState("idle"); // idle | uploading | parsed | failed
+  const [parsedData, setParsedData] = useState(null);
+
+  const handleUpload = async () => {
     if (!file) return;
-    setIsProcessing(true);
+    setStatus("uploading");
     try {
-      // TODO: call upload API
-      // const res = await resumeService.upload(file);
-      // setResume(res.data);
-      await new Promise((r) => setTimeout(r, 1500)); // placeholder
-      setResume({ _id: "mock", title: file.name }); // replace with real data
-    } finally {
-      setIsProcessing(false);
+      // Step 1: Upload to Cloudinary
+      // const cloudinaryUrl = await uploadToCloudinary(file);
+
+      // Step 2: Send URL to backend for parsing
+      // const res = await resumeService.parse({ fileUrl: cloudinaryUrl, title: file.name });
+
+      // Mock success:
+      await new Promise((r) => setTimeout(r, 1500));
+      const mock = {
+        skills: ["React", "TypeScript", "Node.js", "MongoDB"],
+        experience: [
+          {
+            role: "Frontend Developer",
+            company: "Acme Corp",
+            description: ["Built SPAs", "Led UI team"],
+          },
+        ],
+        projects: [
+          {
+            name: "Portfolio",
+            description: "Personal site",
+            techStack: ["Next.js", "Tailwind"],
+          },
+        ],
+      };
+      setParsedData(mock);
+      setStatus("parsed");
+    } catch {
+      setStatus("failed");
     }
   };
 
-  if (isProcessing) {
+  const handleContinue = () => {
+    setResume({ parsedData, title: file?.name });
+  };
+
+  const handleRetry = () => {
+    setFile(null);
+    setParsedData(null);
+    setStatus("idle");
+  };
+
+  if (status === "uploading")
     return <AIStatusLoader message="Parsing your resume..." />;
-  }
+  if (status === "failed") return <ParseFailedView onRetry={handleRetry} />;
+  if (status === "parsed")
+    return (
+      <ParsedResumeView
+        parsedData={parsedData}
+        onContinue={handleContinue}
+        onRetry={handleRetry}
+      />
+    );
 
   return (
     <div>
@@ -81,83 +320,26 @@ export default function ResumeStep() {
           description="Our AI requires your current career history to generate a precision gap analysis. We support PDF, DOCX, and TXT formats."
         />
 
-        {/* Drop Zone */}
-        <div
-          onDragOver={(e) => {
-            e.preventDefault();
-            setIsDragging(true);
-          }}
-          onDragLeave={() => setIsDragging(false)}
-          onDrop={handleDrop}
-          onClick={() => inputRef.current?.click()}
-          className={`mt-4 border-2 border-dashed rounded-xl p-16 cursor-pointer transition-all duration-300 ${
-            isDragging
-              ? "border-primary bg-surface-container-low"
-              : file
-                ? "border-primary/50 bg-surface-container-low"
-                : "border-outline-variant/50 hover:border-primary/50 hover:bg-surface-container-low"
-          }`}
-        >
-          <input
-            ref={inputRef}
-            type="file"
-            accept=".pdf,.docx,.txt"
-            className="hidden"
-            onChange={(e) => handleFile(e.target.files?.[0])}
-          />
-          <div className="flex flex-col items-center gap-6">
-            <div className="w-20 h-20 rounded-full bg-surface-container-high flex items-center justify-center transition-transform duration-300 hover:scale-110">
-              {file ? (
-                <MdOutlineTask size={40} className="text-primary" />
-              ) : (
-                <MdOutlineUploadFile size={40} className="text-primary" />
-              )}
-            </div>
-            <div className="space-y-2 text-center">
-              {file ? (
-                <>
-                  <p className="font-headline-md text-[20px] text-primary">
-                    {file.name}
-                  </p>
-                  <p className="font-mono-detail text-mono-detail text-on-surface-variant">
-                    Click to change file
-                  </p>
-                </>
-              ) : (
-                <>
-                  <p className="font-headline-md text-[24px] text-primary">
-                    Drop resume here or{" "}
-                    <span className="underline">browse files</span>
-                  </p>
-                  <p className="font-mono-detail text-mono-detail text-on-surface-variant uppercase">
-                    Max file size 10MB • Secure encrypted upload
-                  </p>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
+        <DropZone file={file} onFile={setFile} />
 
-        {/* Footer row */}
-        <div className="pt-10 flex items-center justify-between border-t border-outline-variant/20 mt-10">
+        <div className="pt-10 flex items-center justify-between border-t border-outline-variant/20 mt-10 ">
           <div className="flex items-center gap-2 text-on-surface-variant">
             <MdOutlineVerifiedUser size={18} />
             <span className="font-mono-detail text-mono-detail">
               ISO 27001 Certified Processing
             </span>
           </div>
-          <button className="px-8 py-3 border border-primary text-primary rounded-lg font-medium hover:bg-surface-container-high transition-colors">
+          {/* <button className="px-8 py-3 border border-primary text-primary font-mono-label text-mono-label hover:bg-surface-container-high transition-colors">
             Import from LinkedIn
-          </button>
+          </button> */}
         </div>
       </StepContainer>
 
-      {/* Info Bento Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-card-gap mt-10">
         {INFO_CARDS.map(({ tag, title, description }) => (
           <div
             key={tag}
-            className="bg-surface-container-lowest border border-outline-variant/30 p-6 rounded-lg"
+            className="bg-surface-container-lowest border border-outline-variant/30 p-6 rounded"
           >
             <span className="font-mono-label text-mono-label text-on-surface-variant uppercase block mb-4">
               {tag}
@@ -173,10 +355,10 @@ export default function ResumeStep() {
       </div>
 
       <WorkflowActions
-        nextLabel="Continue"
-        nextIcon={MdArrowForward}
+        nextLabel="Parse Resume"
+        nextIcon={LuArrowRight}
         nextDisabled={!file}
-        onNext={handleContinue}
+        onNext={handleUpload}
       />
     </div>
   );

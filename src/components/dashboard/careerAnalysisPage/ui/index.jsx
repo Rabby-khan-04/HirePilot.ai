@@ -1,18 +1,12 @@
-"use client";
-
-import { IoArrowBackOutline, IoArrowForwardSharp } from "react-icons/io5";
-import {
-  MdAutoAwesome,
-  MdOutlineCheckCircleOutline,
-  MdOutlineClose,
-} from "react-icons/md";
+import { MdAutoAwesome } from "react-icons/md";
+import { GoArrowLeft, GoArrowRight, GoCheckCircle, GoX } from "react-icons/go";
 
 // ─── SectionHeader ─────────────────────────────────────────────────────────────
 export function SectionHeader({ tag, title, description }) {
   return (
     <div className="space-y-3 mb-10">
       {tag && (
-        <span className="inline-block px-3 py-1 bg-surface-container-high rounded-sm">
+        <span className="inline-block px-3 py-1 bg-surface-container-high">
           <span className="font-mono-label text-mono-label text-on-surface-variant uppercase">
             {tag}
           </span>
@@ -34,7 +28,7 @@ export function SectionHeader({ tag, title, description }) {
 export function StepContainer({ children, className = "" }) {
   return (
     <div
-      className={`bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-10 shadow-sm relative overflow-hidden ${className}`}
+      className={`bg-surface-container-lowest border border-outline-variant/30 p-10 shadow-sm relative overflow-hidden rounded ${className}`}
     >
       <div
         className="absolute inset-0 opacity-[0.02] pointer-events-none"
@@ -50,15 +44,15 @@ export function StepContainer({ children, className = "" }) {
 
 // ─── AnalyticsCard ─────────────────────────────────────────────────────────────
 export function AnalyticsCard({
-  icon,
-  iconColor = "text-primary",
+  icon: Icon,
+  iconClass = "text-primary",
   title,
   children,
 }) {
   return (
-    <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-8 space-y-6">
+    <div className="bg-surface-container-lowest border border-outline-variant/30 p-8 space-y-6 rounded-3xl">
       <div className="flex items-center gap-3">
-        <span className={`material-symbols-outlined ${iconColor}`}>{icon}</span>
+        <Icon size={20} className={iconClass} />
         <h3 className="font-mono-label text-mono-label uppercase tracking-widest font-bold">
           {title}
         </h3>
@@ -69,13 +63,12 @@ export function AnalyticsCard({
 }
 
 // ─── EmptyState ────────────────────────────────────────────────────────────────
-export function EmptyState({ icon: ICON, title, description, children }) {
+export function EmptyState({ icon: Icon, title, description, children }) {
   return (
     <div className="flex flex-col items-center justify-center text-center space-y-6 py-12">
       <div className="relative w-20 h-20 flex items-center justify-center">
-        <div className="absolute inset-0 bg-primary/5 rounded-full blur-xl" />
-
-        <ICON size={45} className="text-primary/40 relative z-10" />
+        <div className="absolute inset-0 bg-primary/5 blur-xl" />
+        <Icon size={45} className="text-primary/40 relative z-10" />
       </div>
       <div className="space-y-2 max-w-sm">
         <h3 className="font-headline-md text-headline-md text-primary/40">
@@ -94,17 +87,14 @@ export function EmptyState({ icon: ICON, title, description, children }) {
 
 // ─── SkillTag ──────────────────────────────────────────────────────────────────
 export function SkillTag({ skill, matched = false }) {
-  if (matched) {
-    return (
-      <span className="flex items-center gap-2 px-4 py-2 bg-surface-container-high/50 text-primary rounded-lg text-body-md border border-outline-variant/20">
-        <MdOutlineCheckCircleOutline size={18} />
-        {skill}
-      </span>
-    );
-  }
-  return (
-    <span className="flex items-center gap-2 px-4 py-2 border border-outline-variant/30 text-on-surface-variant rounded-lg text-body-md">
-      <MdOutlineClose size={18} />
+  return matched ? (
+    <span className="flex items-center gap-2 px-4 py-2 bg-surface-container-high/50 text-primary border border-outline-variant/20 text-body-md">
+      <GoCheckCircle size={16} />
+      {skill}
+    </span>
+  ) : (
+    <span className="flex items-center gap-2 px-4 py-2 border border-outline-variant/30 text-on-surface-variant text-body-md">
+      <GoX size={16} />
       {skill}
     </span>
   );
@@ -113,16 +103,14 @@ export function SkillTag({ skill, matched = false }) {
 // ─── SeverityBadge ─────────────────────────────────────────────────────────────
 const SEVERITY_STYLES = {
   high: "bg-error/10 text-error",
-  medium: "bg-on-tertiary-container/10 text-on-tertiary-container",
-  low: "bg-outline-variant text-on-surface-variant",
+  medium: "bg-primary/10 text-primary",
+  low: "bg-outline-variant/30 text-on-surface-variant",
 };
 
 export function SeverityBadge({ priority }) {
   return (
     <span
-      className={`px-3 py-1 rounded text-mono-label text-[10px] uppercase font-bold ${
-        SEVERITY_STYLES[priority] ?? SEVERITY_STYLES.low
-      }`}
+      className={`px-3 py-1 font-mono-label text-[10px] uppercase font-bold ${SEVERITY_STYLES[priority] ?? SEVERITY_STYLES.low}`}
     >
       {priority} Priority
     </span>
@@ -141,9 +129,9 @@ export function ProgressBar({ label, value }) {
           {value}%
         </span>
       </div>
-      <div className="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+      <div className="h-2 w-full bg-surface-container overflow-hidden">
         <div
-          className="h-full bg-primary rounded-full transition-all duration-700"
+          className="h-full bg-primary transition-all duration-700"
           style={{ width: `${value}%` }}
         />
       </div>
@@ -157,8 +145,9 @@ export function WorkflowActions({
   backLabel,
   onNext,
   nextLabel,
-  nextIcon: ICON,
+  nextIcon: Icon,
   nextDisabled,
+  loading,
 }) {
   return (
     <div className="mt-12 flex items-center justify-between">
@@ -167,7 +156,10 @@ export function WorkflowActions({
           onClick={onBack}
           className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors font-medium group"
         >
-          <IoArrowBackOutline className="transition-transform group-hover:-translate-x-1" />
+          <GoArrowLeft
+            size={16}
+            className="group-hover:-translate-x-1 transition-transform"
+          />
           {backLabel}
         </button>
       ) : (
@@ -176,28 +168,12 @@ export function WorkflowActions({
 
       <button
         onClick={onNext}
-        disabled={nextDisabled}
-        className={`px-12 py-4 rounded-lg font-medium flex items-center gap-3 transition-all ${
-          nextDisabled
-            ? "bg-surface-container-highest text-on-surface-variant/40 cursor-not-allowed border border-outline-variant/20"
-            : "bg-primary text-on-primary hover:opacity-90"
-        }`}
+        disabled={nextDisabled || loading}
+        className="px-12 py-4 font-medium flex items-center gap-3 transition-all bg-primary text-on-primary hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed rounded"
       >
-        {nextLabel}
-
-        {<ICON /> ?? <IoArrowForwardSharp />}
+        {loading ? "Processing..." : nextLabel}
+        {!loading && (Icon ? <Icon size={18} /> : <GoArrowRight size={18} />)}
       </button>
-    </div>
-  );
-}
-
-// ─── LoadingCard ───────────────────────────────────────────────────────────────
-export function LoadingCard() {
-  return (
-    <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-8 space-y-4 animate-pulse">
-      <div className="h-4 w-32 bg-outline-variant/30 rounded" />
-      <div className="h-3 w-full bg-outline-variant/20 rounded" />
-      <div className="h-3 w-3/4 bg-outline-variant/20 rounded" />
     </div>
   );
 }
@@ -205,12 +181,12 @@ export function LoadingCard() {
 // ─── AIStatusLoader ────────────────────────────────────────────────────────────
 export function AIStatusLoader({ message = "AI is processing..." }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-6 py-20">
-      <div className="relative w-16 h-16">
-        <div className="absolute inset-0 rounded-full border-2 border-primary/20" />
-        <div className="absolute inset-0 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+    <div className="flex flex-col items-center justify-center gap-6 py-20 ">
+      <div className="relative w-16 h-16 rounded overflow-hidden">
+        <div className="absolute inset-0 border-2 border-primary/20" />
+        <div className="absolute inset-0 border-2 border-primary border-t-transparent animate-spin" />
         <div className="absolute inset-0 flex items-center justify-center">
-          <MdAutoAwesome size={24} />
+          <MdAutoAwesome size={24} className="text-primary" />
         </div>
       </div>
       <div className="text-center space-y-1">
@@ -224,3 +200,44 @@ export function AIStatusLoader({ message = "AI is processing..." }) {
     </div>
   );
 }
+
+// ─── LoadingCard ───────────────────────────────────────────────────────────────
+export function LoadingCard() {
+  return (
+    <div className="bg-surface-container-lowest border border-outline-variant/30 p-8 space-y-4 animate-pulse">
+      <div className="h-4 w-32 bg-outline-variant/30" />
+      <div className="h-3 w-full bg-outline-variant/20" />
+      <div className="h-3 w-3/4 bg-outline-variant/20" />
+    </div>
+  );
+}
+
+// ─── Accordion (shared by AnalysisStep + RoadmapStep) ─────────────────────────
+export function Accordion({ trigger, children, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="border border-outline-variant/30 overflow-hidden hover:border-primary/30 transition-all rounded">
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="w-full flex items-center justify-between p-6 text-left hover:bg-surface-container-low transition-colors"
+      >
+        {trigger}
+        <LuChevronDown
+          size={18}
+          className={`text-on-surface-variant shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+      <div
+        className={`grid transition-all duration-300 ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+      >
+        <div className="overflow-hidden">
+          <div className="px-6 pb-6 pt-2">{children}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// missing imports for Accordion
+import { useState } from "react";
+import { LuChevronDown } from "react-icons/lu";

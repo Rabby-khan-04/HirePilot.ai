@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AIStatusLoader, ProgressBar, WorkflowActions } from "./ui";
 import { useWorkflowStore } from "@/store/workflowStore";
-import { MdOutlineCelebration } from "react-icons/md";
+import { MdOutlineCelebration, MdOutlineExpandMore } from "react-icons/md";
 // ─── RoadmapTask ───────────────────────────────────────────────────────────────
 function RoadmapTask({ task, onToggle }) {
   return (
@@ -80,10 +80,10 @@ function RoadmapWeekAccordion({ week, onToggleTask }) {
           </div>
         </div>
         <span
-          className="material-symbols-outlined text-on-surface-variant transition-transform duration-200"
+          className="text-on-surface-variant transition-transform duration-200"
           style={{ transform: open ? "rotate(180deg)" : "rotate(0)" }}
         >
-          expand_more
+          <MdOutlineExpandMore />
         </span>
       </button>
 

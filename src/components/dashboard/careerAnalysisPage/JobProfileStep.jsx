@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useWorkflowStore } from "@/store/workflowStore";
 import {
   AIStatusLoader,
   EmptyState,
@@ -9,37 +10,28 @@ import {
   StepContainer,
   WorkflowActions,
 } from "./ui";
-import { useWorkflowStore } from "@/store/workflowStore";
-import {
-  MdAutoAwesome,
-  MdInfoOutline,
-  MdOutlineAnalytics,
-  MdOutlineAutoGraph,
-  MdOutlineInsights,
-} from "react-icons/md";
+import { LuInfo, LuChartBar, LuSparkles, LuArrowRight } from "react-icons/lu";
+import { MdOutlineInsights } from "react-icons/md";
 
+// ─── JobProfilePreview ─────────────────────────────────────────────────────────
 function JobProfilePreview({ jobProfile }) {
   if (!jobProfile) {
     return (
-      <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-10 h-full flex flex-col justify-center">
+      <div className="bg-surface-container-lowest border border-outline-variant/30 p-10 h-full flex flex-col justify-center rounded">
         <EmptyState
           icon={MdOutlineInsights}
           title="Job Profile Insights"
-          description="Your AI-powered job analysis will appear here after adding a job title and description."
+          description="Your AI-powered job analysis will appear here after analyzing a job title."
         >
-          {/* Skeleton */}
           <div className="w-full space-y-6 pt-4 opacity-30 select-none pointer-events-none">
-            <div className="space-y-3">
-              <div className="h-2 w-24 bg-outline-variant/40 rounded-full" />
-              <div className="flex flex-wrap gap-2 justify-center">
-                {[20, 24, 16].map((w) => (
-                  <div
-                    key={w}
-                    className="h-8 border border-dashed border-outline-variant rounded-lg animate-pulse"
-                    style={{ width: `${w * 4}px` }}
-                  />
-                ))}
-              </div>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {[80, 96, 64].map((w) => (
+                <div
+                  key={w}
+                  className="h-8 border border-dashed border-outline-variant animate-pulse"
+                  style={{ width: `${w}px` }}
+                />
+              ))}
             </div>
           </div>
         </EmptyState>
@@ -48,8 +40,9 @@ function JobProfilePreview({ jobProfile }) {
   }
 
   const { extractedData } = jobProfile;
+
   return (
-    <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-10 h-full space-y-8">
+    <div className="bg-surface-container-lowest border border-outline-variant/30 p-10 h-full space-y-8 rounded">
       <div>
         <span className="font-mono-label text-mono-label text-on-surface-variant uppercase block mb-4">
           Technical Skills
@@ -64,7 +57,7 @@ function JobProfilePreview({ jobProfile }) {
         <span className="font-mono-label text-mono-label text-on-surface-variant uppercase block mb-4">
           Experience Level
         </span>
-        <span className="px-4 py-2 bg-surface-container-high rounded-lg font-mono-label text-mono-label text-primary uppercase">
+        <span className="px-4 py-2 bg-surface-container-high font-mono-label text-mono-label text-primary uppercase">
           {extractedData.experienceLevel}
         </span>
       </div>
@@ -76,7 +69,7 @@ function JobProfilePreview({ jobProfile }) {
           {extractedData.keywords.map((kw) => (
             <span
               key={kw}
-              className="px-3 py-1 border border-outline-variant/30 rounded-full text-mono-detail text-on-surface-variant"
+              className="px-3 py-1 border border-outline-variant/30 font-mono-detail text-mono-detail text-on-surface-variant"
             >
               {kw}
             </span>
@@ -87,21 +80,24 @@ function JobProfilePreview({ jobProfile }) {
   );
 }
 
+// ─── JobProfileStep ────────────────────────────────────────────────────────────
 export default function JobProfileStep() {
   const { jobProfile, setJobProfile, goToStep } = useWorkflowStore();
-  const [jobTitle, setJobTitle] = useState("");
-  const [jobDescription, setJobDescription] = useState("");
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [previewData, setPreviewData] = useState(jobProfile);
+  const [jobTitle, setJobTitle] = useState(jobProfile?.title ?? "");
+  const [jobDescription, setJobDescription] = useState(
+    jobProfile?.jobDescription ?? "",
+  );
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [previewData, setPreviewData] = useState(jobProfile ?? null);
 
   const handleAnalyze = async () => {
     if (!jobTitle.trim()) return;
-    setIsProcessing(true);
+    setIsAnalyzing(true);
     try {
       // TODO: call job profile API
       // const res = await jobProfileService.create({ jobTitle, jobDescription });
-      await new Promise((r) => setTimeout(r, 1500)); // placeholder
-      const mock = {
+      await new Promise((r) => setTimeout(r, 1500));
+      setPreviewData({
         _id: "mock",
         title: jobTitle,
         jobDescription,
@@ -111,25 +107,23 @@ export default function JobProfileStep() {
           experienceLevel: "Mid-Level",
           keywords: ["SPA", "REST", "Agile", "CI/CD"],
         },
-      };
-      setPreviewData(mock);
+      });
     } finally {
-      setIsProcessing(false);
+      setIsAnalyzing(false);
     }
   };
 
+  // Saves to store AND advances to step 3
   const handleNext = () => {
-    setJobProfile(previewData);
+    setJobProfile(previewData); // this sets activeStep to max(current, 3)
   };
 
-  if (isProcessing) {
-    return <AIStatusLoader message="Analyzing job profile..." />;
-  }
+  if (isAnalyzing) return <AIStatusLoader message="Analyzing job profile..." />;
 
   return (
     <div>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
-        {/* Left: Form */}
+        {/* Form */}
         <div className="lg:col-span-7">
           <StepContainer>
             <SectionHeader
@@ -146,7 +140,7 @@ export default function JobProfileStep() {
                   value={jobTitle}
                   onChange={(e) => setJobTitle(e.target.value)}
                   placeholder="Frontend Developer"
-                  className="w-full bg-surface-container/30 border border-outline-variant/30 rounded-xl px-4 py-3.5 focus:ring-1 focus:ring-primary/20 focus:border-primary/40 transition-all outline-none font-body-md text-on-surface"
+                  className="w-full bg-transparent border-b border-outline-variant focus:border-primary focus:outline-none py-3 px-0 font-body-md text-on-surface transition-all placeholder:text-outline-variant"
                 />
               </div>
 
@@ -159,15 +153,15 @@ export default function JobProfileStep() {
                   onChange={(e) => setJobDescription(e.target.value)}
                   rows={6}
                   placeholder="Paste a LinkedIn or company job description here..."
-                  className="w-full bg-surface-container/30 border border-outline-variant/30 rounded-xl px-4 py-3.5 focus:ring-1 focus:ring-primary/20 focus:border-primary/40 transition-all outline-none font-body-md text-on-surface resize-none"
+                  className="w-full bg-transparent border-b border-outline-variant focus:border-primary focus:outline-none py-3 px-0 font-body-md text-on-surface transition-all placeholder:text-outline-variant resize-none"
                 />
                 <div className="flex items-start gap-2 pt-1">
-                  <MdInfoOutline
-                    size={18}
-                    className="text-on-surface-variant mt-0.5"
+                  <LuInfo
+                    size={16}
+                    className="text-on-surface-variant mt-0.5 shrink-0"
                   />
                   <p className="text-mono-detail text-on-surface-variant leading-relaxed">
-                    If left empty, HirePilot AI can generate a realistic job
+                    If left empty, HirePilot AI will generate a realistic job
                     description automatically.
                   </p>
                 </div>
@@ -178,23 +172,23 @@ export default function JobProfileStep() {
               <button
                 onClick={handleAnalyze}
                 disabled={!jobTitle.trim()}
-                className="flex-1 py-4 bg-primary text-on-primary rounded-xl font-medium hover:opacity-90 transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 py-4 bg-primary text-on-primary font-mono-label text-mono-label hover:opacity-90 transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed rounded"
               >
+                <LuChartBar size={18} />
                 Analyze Job Profile
-                <MdOutlineAnalytics size={20} />
               </button>
               <button
                 onClick={handleAnalyze}
-                className="flex-1 py-4 border border-outline-variant/50 text-primary rounded-xl font-medium hover:bg-surface-container-high transition-all flex items-center justify-center gap-3"
+                className="flex-1 py-4 border border-outline-variant text-primary font-mono-label text-mono-label hover:bg-surface-container-high transition-all flex items-center justify-center gap-3 rounded"
               >
+                <LuSparkles size={18} />
                 Generate with AI
-                <MdAutoAwesome size={20} />
               </button>
             </div>
           </StepContainer>
         </div>
 
-        {/* Right: Preview */}
+        {/* Preview */}
         <div className="lg:col-span-5">
           <JobProfilePreview jobProfile={previewData} />
         </div>
@@ -204,7 +198,7 @@ export default function JobProfileStep() {
         onBack={() => goToStep(1)}
         backLabel="Back to Resume"
         nextLabel="Generate AI Analysis"
-        nextIcon={MdOutlineAutoGraph}
+        nextIcon={LuArrowRight}
         nextDisabled={!previewData}
         onNext={handleNext}
       />
