@@ -19,6 +19,9 @@ import {
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import { RiUploadCloud2Line } from "react-icons/ri";
 import toast from "react-hot-toast";
+import { uploadToCloudinary } from "@/lib/upload/cloudinary";
+import { parseResume } from "@/services/resume.service";
+import { FaLaptopCode } from "react-icons/fa6";
 
 const INFO_CARDS = [
   {
@@ -119,11 +122,17 @@ function ParsedResumeView({ parsedData, onContinue, onRetry }) {
       {/* Projects */}
       {projects.length > 0 && (
         <div className="bg-surface-container-lowest border border-outline-variant/30 p-6 space-y-4 rounded">
-          <span className="font-mono-label text-mono-label uppercase text-on-surface-variant block mb-2">
-            Projects
-          </span>
+          <div className="flex items-center gap-2 mb-2">
+            <FaLaptopCode size={16} className="text-primary" />
+            <span className="font-mono-label text-mono-label uppercase text-on-surface-variant">
+              Projects
+            </span>
+          </div>
           {projects.map((p, i) => (
-            <div key={i} className="space-y-1">
+            <div
+              key={i}
+              className="border-l-2 border-outline-variant/30 pl-4 space-y-1"
+            >
               <p className="font-body-md font-semibold text-on-surface">
                 {p.name}
               </p>
@@ -262,34 +271,18 @@ export default function ResumeStep() {
       return;
     }
 
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("File size must be under 10mb!!");
+    }
     setStatus("uploading");
     try {
-      // Step 1: Upload to Cloudinary
-      // const cloudinaryUrl = await uploadToCloudinary(file);
+      const fileUrl = await uploadToCloudinary(file);
 
-      // Step 2: Send URL to backend for parsing
-      // const res = await resumeService.parse({ fileUrl: cloudinaryUrl, title: file.name });
+      setStatus("parsing");
+      const res = await parseResume(fileUrl);
+      const resume = res.data.data;
 
-      // Mock success:
-      await new Promise((r) => setTimeout(r, 1500));
-      const mock = {
-        skills: ["React", "TypeScript", "Node.js", "MongoDB"],
-        experience: [
-          {
-            role: "Frontend Developer",
-            company: "Acme Corp",
-            description: ["Built SPAs", "Led UI team"],
-          },
-        ],
-        projects: [
-          {
-            name: "Portfolio",
-            description: "Personal site",
-            techStack: ["Next.js", "Tailwind"],
-          },
-        ],
-      };
-      setParsedData(mock);
+      setParsedData(resume.parsedData);
       setStatus("parsed");
     } catch {
       setStatus("failed");
@@ -306,7 +299,7 @@ export default function ResumeStep() {
     setStatus("idle");
   };
 
-  if (status === "uploading")
+  if (status === "uploading" || status === "parsing")
     return <AIStatusLoader message="Parsing your resume..." />;
   if (status === "failed") return <ParseFailedView onRetry={handleRetry} />;
   if (status === "parsed")
