@@ -12,6 +12,8 @@ import {
 } from "./ui";
 import { LuInfo, LuChartBar, LuSparkles, LuArrowRight } from "react-icons/lu";
 import { MdOutlineInsights } from "react-icons/md";
+import { createJobProfile } from "@/services/jobProfiles.service";
+import toast from "react-hot-toast";
 
 // ─── JobProfilePreview ─────────────────────────────────────────────────────────
 function JobProfilePreview({ jobProfile }) {
@@ -91,23 +93,15 @@ export default function JobProfileStep() {
   const [previewData, setPreviewData] = useState(jobProfile ?? null);
 
   const handleAnalyze = async () => {
-    if (!jobTitle.trim()) return;
+    if (!jobTitle.trim()) {
+      toast.error("Job title is required!!");
+      return;
+    }
     setIsAnalyzing(true);
     try {
-      // TODO: call job profile API
-      // const res = await jobProfileService.create({ jobTitle, jobDescription });
-      await new Promise((r) => setTimeout(r, 1500));
-      setPreviewData({
-        _id: "mock",
-        title: jobTitle,
-        jobDescription,
-        extractedData: {
-          technicalSkills: ["React", "TypeScript", "Node.js"],
-          softSkills: ["Communication", "Leadership"],
-          experienceLevel: "Mid-Level",
-          keywords: ["SPA", "REST", "Agile", "CI/CD"],
-        },
-      });
+      const res = await createJobProfile(jobTitle, jobDescription);
+      const data = res.data.data;
+      setPreviewData(data);
     } finally {
       setIsAnalyzing(false);
     }
