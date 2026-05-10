@@ -30,7 +30,7 @@ export default function ProfileDropdown({ user }) {
             src={user?.avatar}
             width={40}
             height={40}
-            className="object-cover p-0.5 rounded-full bg-linear-to-tr from-primary to-outline-variant hover:scale-105 transition-transform focus:outline-none"
+            className="object-cover p-0.5 rounded-full bg-linear-to-tr from-primary to-outline-variant hover:scale-105 transition-transform focus:outline-none cursor-pointer"
             alt={user?.name}
           />
         ) : (

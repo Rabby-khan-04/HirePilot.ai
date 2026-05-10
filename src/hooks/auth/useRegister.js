@@ -11,7 +11,6 @@ export const useRegister = () => {
   return useMutation({
     mutationFn: (data) => registerUser(data),
     onSuccess: (res) => {
-      console.log(res);
       setUser(res.data.data);
       toast.success("Account created successfully! Welcome to HirePilot.");
       router.push("/");

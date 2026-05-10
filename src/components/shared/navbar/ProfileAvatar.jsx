@@ -5,7 +5,7 @@ const ProfileAvatar = forwardRef((props, ref) => (
   <button
     ref={ref}
     aria-label="Open profile menu"
-    className="p-0.5 rounded-full bg-linear-to-tr from-primary to-outline-variant hover:scale-105 transition-transform focus:outline-none"
+    className="p-0.5 rounded-full bg-linear-to-tr from-primary to-outline-variant hover:scale-105 transition-transform focus:outline-none cursor-pointer"
     {...props}
   >
     <div className="w-9 h-9 rounded-full border-2 border-surface bg-surface-container-high flex items-center justify-center overflow-hidden">

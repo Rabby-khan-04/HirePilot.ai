@@ -11,5 +11,5 @@ export const logout = async () => {
   await publicClient.post("/users/user/logout");
   useUserStore.getState().clearUser();
   toast.success("Logged out successfully. See you soon!");
-  window.location.href = "/login";
+  // window.location.href = "/login";
 };
