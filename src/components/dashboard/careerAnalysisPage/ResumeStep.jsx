@@ -261,7 +261,7 @@ export default function ResumeStep() {
   const { setResume } = useWorkflowStore();
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState("idle"); // idle | uploading | parsed | failed
-  const [parsedData, setParsedData] = useState(null);
+  const [resumeData, setResumeData] = useState(null);
 
   const handleUpload = async () => {
     if (!file) return;
@@ -282,7 +282,7 @@ export default function ResumeStep() {
       const res = await parseResume(fileUrl);
       const resume = res.data.data;
 
-      setParsedData(resume.parsedData);
+      setResumeData(resume);
       setStatus("parsed");
     } catch {
       setStatus("failed");
@@ -290,12 +290,12 @@ export default function ResumeStep() {
   };
 
   const handleContinue = () => {
-    setResume({ parsedData, title: file?.name });
+    setResume(resumeData);
   };
 
   const handleRetry = () => {
     setFile(null);
-    setParsedData(null);
+    setResumeData(null);
     setStatus("idle");
   };
 
@@ -305,7 +305,7 @@ export default function ResumeStep() {
   if (status === "parsed")
     return (
       <ParsedResumeView
-        parsedData={parsedData}
+        parsedData={resumeData.parsedData}
         onContinue={handleContinue}
         onRetry={handleRetry}
       />

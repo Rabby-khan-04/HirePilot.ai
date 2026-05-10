@@ -20,9 +20,18 @@ import {
   MdPsychology,
   MdMap,
 } from "react-icons/md";
+import { generateAiAnalysis } from "@/services/aiAnalysis.service";
+
+const getScoreLabel = (score) => {
+  if (score >= 85) return { label: "Excellent match", color: "text-success" };
+  if (score >= 70) return { label: "Strong match", color: "text-primary" };
+  if (score >= 50) return { label: "Moderate match", color: "text-warning" };
+  return { label: "Weak match", color: "text-error" };
+};
 
 // ─── ScoreCard ─────────────────────────────────────────────────────────────────
 function ScoreCard({ score, jobTitle }) {
+  const { label, color } = getScoreLabel(score);
   return (
     <div className="bg-surface-container-lowest border border-outline-variant/30 p-10 flex flex-col md:flex-row items-center gap-12 rounded">
       {/* Radial progress */}
@@ -47,7 +56,7 @@ function ScoreCard({ score, jobTitle }) {
             r="44"
             fill="none"
             stroke="currentColor"
-            className="text-primary"
+            className={color}
             strokeWidth="8"
             strokeLinecap="round"
             strokeDasharray={`${2 * Math.PI * 44}`}
@@ -56,7 +65,9 @@ function ScoreCard({ score, jobTitle }) {
         </svg>
 
         <div className="absolute flex flex-col items-center">
-          <span className="font-headline-lg text-display-xl text-primary leading-none">
+          <span
+            className={`font-headline-lg text-display-xl ${color} leading-none`}
+          >
             {score}%
           </span>
 
@@ -68,8 +79,8 @@ function ScoreCard({ score, jobTitle }) {
 
       <div className="flex-1 space-y-4 text-center md:text-left">
         <div className="space-y-1">
-          <h2 className="font-headline-md text-headline-md text-primary">
-            Strong match for {jobTitle} roles
+          <h2 className={`font-headline-md text-headline-md ${color}`}>
+            {label} for {jobTitle} roles
           </h2>
 
           <p className="text-on-surface-variant text-body-md leading-relaxed max-w-2xl">
@@ -98,7 +109,7 @@ function ScoreCard({ score, jobTitle }) {
 }
 
 // ─── QuestionItem ──────────────────────────────────────────────────────────────
-function QuestionItem({ question, intent, answerStrategy }) {
+function QuestionItem({ question, intention, answer }) {
   return (
     <Accordion
       trigger={
@@ -114,7 +125,7 @@ function QuestionItem({ question, intent, answerStrategy }) {
           </p>
 
           <p className="text-body-md text-on-surface-variant bg-surface-container/30 p-4 italic border-l-2 border-primary/20">
-            {intent}
+            {intention}
           </p>
         </div>
 
@@ -124,7 +135,7 @@ function QuestionItem({ question, intent, answerStrategy }) {
           </p>
 
           <p className="text-body-md text-on-surface leading-relaxed">
-            {answerStrategy}
+            {answer}
           </p>
         </div>
       </div>
@@ -134,72 +145,23 @@ function QuestionItem({ question, intent, answerStrategy }) {
 
 // ─── AnalysisStep ──────────────────────────────────────────────────────────────
 export default function AnalysisStep() {
-  const { analysis, jobProfile, setAnalysis, goToStep } = useWorkflowStore();
+  const { analysis, jobProfile, setAnalysis, goToStep, resume } =
+    useWorkflowStore();
 
   const [localAnalysis, setLocalAnalysis] = useState(analysis ?? null);
   const [isLoading, setIsLoading] = useState(analysis === null);
   const [activeTab, setActiveTab] = useState("technical");
 
+  console.log(analysis);
+
   // Fetch analysis once on mount if not already in store
   useEffect(() => {
-    // ✅ If analysis already exists in store, useState already initialized
-    // correctly above — no setState needed here at all
     if (analysis) return;
 
     const fetchAnalysis = async () => {
-      // TODO: replace with real API call
-      await new Promise((r) => setTimeout(r, 1500));
+      const res = await generateAiAnalysis(resume._id, jobProfile._id);
 
-      setLocalAnalysis({
-        score: 82,
-        matchedSkills: [
-          "React",
-          "TypeScript",
-          "Node.js",
-          "MongoDB",
-          "REST API",
-          "Git",
-        ],
-        skillGaps: [
-          { skill: "System Design", priority: "high" },
-          { skill: "Unit Testing (Jest/Cypress)", priority: "high" },
-          { skill: "CI/CD Pipelines", priority: "medium" },
-          { skill: "GraphQL", priority: "low" },
-        ],
-        suggestions: [
-          "Explicitly highlight TypeScript Generic usage in your projects to match senior requirements.",
-          "Add a backend-heavy project featuring Docker orchestration to your portfolio.",
-          "Focus on Behavioral STAR method practice for leadership-oriented questions.",
-        ],
-        technicalQuestions: [
-          {
-            question:
-              "Explain the difference between authentication and authorization.",
-            intent:
-              "To verify fundamental web security knowledge and clarity in distinguishing user identity vs user permissions.",
-            answerStrategy:
-              "Define Authentication (Who are you?) vs Authorization (What can you do?). Use a real-world analogy. Mention JWT, OAuth, and RBAC.",
-          },
-          {
-            question: "What problem does useEffect solve in React?",
-            intent:
-              "Assess understanding of component lifecycle, side effects, and modern functional component patterns.",
-            answerStrategy:
-              'Focus on "Synchronization". It allows you to sync a component with an external system. Mention the dependency array and cleanup function.',
-          },
-        ],
-        behavioralQuestions: [
-          {
-            question: "Tell me about a time you solved a difficult bug.",
-            intent:
-              "To observe problem-solving methodology, persistence, and ability to articulate technical challenges.",
-            answerStrategy:
-              "Use the STAR method. Describe the situation, what you tried, how you isolated it, and the architectural fix.",
-          },
-        ],
-        technicalProficiency: 75,
-        behavioralReadiness: 68,
-      });
+      setLocalAnalysis(res.data.data);
 
       setIsLoading(false);
     };

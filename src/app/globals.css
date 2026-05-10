@@ -53,6 +53,8 @@
   --color-on-tertiary-container: #868381;
   --color-on-secondary-fixed-variant: #454747;
   --color-outline: #747878;
+  --color-success: #16a34a;
+  --color-warning: #d97706;
 
   /* ── Border Radius ── */
   --radius: 0.125rem;
