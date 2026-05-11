@@ -2,8 +2,15 @@
 
 import { useState } from "react";
 import { AIStatusLoader, ProgressBar, WorkflowActions } from "./ui";
-import { useWorkflowStore } from "@/store/workflowStore";
+import {
+  useAnalysis,
+  useRoadmap,
+  useWorkflowActions,
+  useWorkflowStore,
+} from "@/store/workflowStore";
 import { MdOutlineCelebration, MdOutlineExpandMore } from "react-icons/md";
+import { generateLearningRoadMap } from "@/services/roadmap.service";
+import { useRouter } from "next/navigation";
 // ─── RoadmapTask ───────────────────────────────────────────────────────────────
 function RoadmapTask({ task, onToggle }) {
   return (
@@ -174,80 +181,22 @@ function ProgressSidebar({ roadmap, totalTasks, completedTasks }) {
 
 // ─── RoadmapStep ──────────────────────────────────────────────────────────────
 export default function RoadmapStep() {
-  const { roadmap, setRoadmap, goToStep } = useWorkflowStore();
+  const roadmap = useRoadmap();
+  const analysis = useAnalysis();
+  const { setRoadmap, goToStep, reset } = useWorkflowActions();
   const [isLoading, setIsLoading] = useState(!roadmap);
   const [localRoadmap, setLocalRoadmap] = useState(roadmap);
+  const router = useRouter();
 
   useState(() => {
     if (!roadmap) {
       const load = async () => {
-        await new Promise((r) => setTimeout(r, 1500));
-        const mock = {
-          title: "Frontend Developer Mastery Path",
-          duration: "4 Weeks",
-          progress: 0,
-          roadmap: [
-            {
-              week: 1,
-              title: "System Design Fundamentals",
-              days: [
-                {
-                  day: 1,
-                  tasks: [
-                    {
-                      _id: "t1",
-                      text: "Study scalability patterns",
-                      resource: "https://example.com",
-                      isCompleted: false,
-                    },
-                    {
-                      _id: "t2",
-                      text: "Read about load balancing",
-                      resource: "",
-                      isCompleted: false,
-                    },
-                  ],
-                },
-                {
-                  day: 2,
-                  tasks: [
-                    {
-                      _id: "t3",
-                      text: "Practice designing a URL shortener",
-                      resource: "",
-                      isCompleted: false,
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              week: 2,
-              title: "Testing & CI/CD",
-              days: [
-                {
-                  day: 1,
-                  tasks: [
-                    {
-                      _id: "t4",
-                      text: "Set up Jest in a React project",
-                      resource: "https://jestjs.io",
-                      isCompleted: false,
-                    },
-                    {
-                      _id: "t5",
-                      text: "Write unit tests for 3 components",
-                      resource: "",
-                      isCompleted: false,
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        };
-        setLocalRoadmap(mock);
-        setRoadmap(mock);
+        const res = await generateLearningRoadMap(analysis._id);
+
+        const data = res.data.data;
+
+        setLocalRoadmap(data);
+        setRoadmap(data);
         setIsLoading(false);
       };
       load();
@@ -255,6 +204,11 @@ export default function RoadmapStep() {
       setIsLoading(false);
     }
   });
+
+  const handleCompleateStep = () => {
+    reset();
+    router.push("/dashboard");
+  };
 
   const handleToggleTask = (taskId) => {
     const updated = {
@@ -322,7 +276,7 @@ export default function RoadmapStep() {
         backLabel="Back to Analysis"
         nextLabel="Complete Journey"
         nextIcon={MdOutlineCelebration}
-        onNext={() => {}}
+        onNext={handleCompleateStep}
       />
     </div>
   );

@@ -152,7 +152,7 @@ export default function AnalysisStep() {
   const [isLoading, setIsLoading] = useState(analysis === null);
   const [activeTab, setActiveTab] = useState("technical");
 
-  console.log(analysis);
+  console.log(localAnalysis);
 
   // Fetch analysis once on mount if not already in store
   useEffect(() => {
