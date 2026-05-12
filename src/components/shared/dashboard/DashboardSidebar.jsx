@@ -29,9 +29,9 @@ const NAV_LINKS = [
     label: "Roadmaps",
   },
   {
-    href: "/dashboard/interview-prep",
+    href: "/dashboard/ai-analysis",
     icon: MdOutlinePsychology,
-    label: "Interview Prep",
+    label: "Ai Analysis",
   },
   {
     href: "/dashboard/resumes",

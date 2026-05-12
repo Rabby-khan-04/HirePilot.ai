@@ -2,7 +2,6 @@
 
 import RoadmapCard from "./RoadmapCard";
 import CreateRoadmapCard from "./CreateRoadmapCard";
-import { MdOutlineMap, MdSearchOff, MdFilterAltOff } from "react-icons/md";
 import { useRoadmapFilterStore } from "@/store/userRoadmapFilterStore";
 import { ErrorState } from "./ErrorState";
 import { ShimmerGrid } from "@/components/shimmer/Roadmap/ShimmerGrid";
