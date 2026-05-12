@@ -208,14 +208,14 @@ export default function AnalysisStep() {
           title="Skill Gaps"
         >
           <div className="space-y-3">
-            {localAnalysis.skillGaps.map(({ skill, priority }) => (
+            {localAnalysis.skillGaps.map(({ skill, severity }) => (
               <div
                 key={skill}
-                className="flex items-center justify-between p-3 bg-surface-container-low"
+                className="flex items-center justify-between p-3 bg-surface-container-low rounded"
               >
                 <span className="text-body-md font-medium">{skill}</span>
 
-                <SeverityBadge priority={priority} />
+                <SeverityBadge priority={severity} />
               </div>
             ))}
           </div>
@@ -254,7 +254,7 @@ export default function AnalysisStep() {
       </div>
 
       {/* Interview Questions */}
-      <div className="bg-surface-container-lowest border border-outline-variant/30 overflow-hidden">
+      <div className="bg-surface-container-lowest border border-outline-variant/30 overflow-hidden rounded">
         <div className="p-8 border-b border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <h3 className="font-headline-md text-headline-md text-primary">
             Predicted Interview Questions

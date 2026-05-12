@@ -88,7 +88,7 @@ export function EmptyState({ icon: Icon, title, description, children }) {
 // ─── SkillTag ──────────────────────────────────────────────────────────────────
 export function SkillTag({ skill, matched = false }) {
   return matched ? (
-    <span className="flex items-center gap-2 px-4 py-2 bg-surface-container-high/50 text-primary border border-outline-variant/20 text-body-md">
+    <span className="flex items-center gap-2 px-4 py-2 bg-surface-container-high/50 text-primary border border-outline-variant/20 text-body-md rounded-sm">
       <GoCheckCircle size={16} />
       {skill}
     </span>

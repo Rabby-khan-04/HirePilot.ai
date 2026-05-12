@@ -175,7 +175,7 @@ export default function AnalysisCard({ analysis }) {
       {/* Actions */}
       <div className="mt-4 grid grid-cols-2 gap-2">
         <Link
-          href={`/dashboard/analyses/${_id}`}
+          href={`/dashboard/ai-analysis/${_id}`}
           className="bg-primary text-on-primary py-2 text-[11px] font-bold uppercase tracking-widest rounded hover:bg-primary/90 transition-colors text-center"
         >
           View Full

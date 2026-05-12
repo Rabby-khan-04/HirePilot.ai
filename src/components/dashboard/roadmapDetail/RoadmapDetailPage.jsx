@@ -44,7 +44,7 @@ export default function RoadmapDetailPage() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-margin-page pt-10 pb-section-padding">
+    <div className="w-full px-margin-page pt-10 pb-section-padding">
       {/* Breadcrumbs */}
       <nav className="flex items-center gap-2 mb-6 font-mono-label text-mono-label uppercase text-on-surface-variant">
         <Link

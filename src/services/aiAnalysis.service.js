@@ -21,3 +21,8 @@ export const fetchAnalyses = async ({
   const { data } = await authClient.get(`/ai-analyses?${params}`);
   return data.data;
 };
+
+export const fetchAnalysisById = async (id) => {
+  const { data } = await authClient.get(`/ai-analyses/${id}`);
+  return data.data;
+};

@@ -21,7 +21,7 @@ export default function CareerAnalysisWorkflow() {
 
   return (
     <section className="flex-1 px-margin-page py-section-padding">
-      <div className="max-w-7xl mx-auto">
+      <div className="">
         <WorkflowStepper />
         <ActiveStepComponent />
       </div>
