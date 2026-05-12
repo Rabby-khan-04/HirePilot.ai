@@ -1,77 +1,58 @@
 "use client";
 
-import { MOCK_ROADMAPS } from "@/data/roadmapMockData";
-import { useState, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useDebounce } from "use-debounce";
+import { useRoadmapFilterStore } from "@/store/userRoadmapFilterStore";
+import { fetchRoadmaps } from "@/services/roadmap.service";
 
-// TODO: replace MOCK_ROADMAPS with real API call
-// import { authClient } from "@/lib/api-client";
+// ── Hook ───────────────────────────────────────────────────────────────────
 
 export const useRoadmaps = () => {
-  const [roadmaps, setRoadmaps] = useState(MOCK_ROADMAPS);
-  const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [durationFilter, setDurationFilter] = useState("all");
-  const [sortBy, setSortBy] = useState("updatedAt");
-  const [isLoading, setIsLoading] = useState(false);
+  const {
+    search,
+    statusFilter,
+    durationFilter,
+    sortBy,
+    setSearch,
+    setStatusFilter,
+    setDurationFilter,
+    setSortBy,
+    resetFilters,
+  } = useRoadmapFilterStore();
 
-  // TODO: replace mock with real fetch
-  // useEffect(() => {
-  //   const fetch = async () => {
-  //     setIsLoading(true);
-  //     const res = await authClient.get("/roadmaps");
-  //     setRoadmaps(res.data.data);
-  //     setIsLoading(false);
-  //   };
-  //   fetch();
-  // }, []);
+  // Debounce search so we don't fire a request on every keystroke
+  const [debouncedSearch] = useDebounce(search, 400);
 
-  const filtered = useMemo(() => {
-    let result = [...roadmaps];
-
-    // search
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      result = result.filter(
-        (r) =>
-          r.title.toLowerCase().includes(q) ||
-          r.category?.toLowerCase().includes(q) ||
-          r.skills?.some((s) => s.toLowerCase().includes(q)),
-      );
-    }
-
-    // status filter
-    if (statusFilter === "completed") {
-      result = result.filter((r) => r.progress.percentage === 100);
-    } else if (statusFilter === "in-progress") {
-      result = result.filter(
-        (r) => r.progress.percentage > 0 && r.progress.percentage < 100,
-      );
-    } else if (statusFilter === "not-started") {
-      result = result.filter((r) => r.progress.percentage === 0);
-    }
-
-    // duration filter
-    if (durationFilter !== "all") {
-      result = result.filter((r) =>
-        r.duration.toLowerCase().includes(durationFilter),
-      );
-    }
-
-    // sort
-    if (sortBy === "updatedAt") {
-      result.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-    } else if (sortBy === "progress") {
-      result.sort((a, b) => b.progress.percentage - a.progress.percentage);
-    } else if (sortBy === "title") {
-      result.sort((a, b) => a.title.localeCompare(b.title));
-    }
-
-    return result;
-  }, [roadmaps, search, statusFilter, durationFilter, sortBy]);
+  const query = useQuery({
+    queryKey: [
+      "roadmaps",
+      debouncedSearch,
+      statusFilter,
+      durationFilter,
+      sortBy,
+    ],
+    queryFn: () =>
+      fetchRoadmaps({
+        search: debouncedSearch || undefined,
+        status: statusFilter !== "all" ? statusFilter : undefined,
+        duration: durationFilter !== "all" ? durationFilter : undefined,
+        sortBy,
+      }),
+    staleTime: 1000 * 30, // treat data as fresh for 30 s
+    placeholderData: (prev) => prev, // keep previous results while refetching (avoids flash)
+  });
 
   return {
-    roadmaps: filtered,
-    isLoading,
+    // data
+    roadmaps: query.data ?? [],
+
+    // states the UI typically needs
+    isLoading: query.isLoading, // true only on first load (no cached data yet)
+    isFetching: query.isFetching, // true on every background refetch
+    isError: query.isError,
+    error: query.error,
+
+    // filters
     search,
     setSearch,
     statusFilter,
@@ -80,5 +61,6 @@ export const useRoadmaps = () => {
     setDurationFilter,
     sortBy,
     setSortBy,
+    resetFilters,
   };
 };

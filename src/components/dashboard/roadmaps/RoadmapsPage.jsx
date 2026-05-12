@@ -9,6 +9,9 @@ import RoadmapsToolbar from "./RoadmapsToolbar";
 export default function RoadmapsPage() {
   const {
     roadmaps,
+    isLoading,
+    isFetching,
+    isError,
     search,
     setSearch,
     statusFilter,
@@ -17,6 +20,7 @@ export default function RoadmapsPage() {
     setDurationFilter,
     sortBy,
     setSortBy,
+    resetFilters,
   } = useRoadmaps();
 
   return (
@@ -32,9 +36,16 @@ export default function RoadmapsPage() {
         onDurationChange={setDurationFilter}
         sortBy={sortBy}
         onSortChange={setSortBy}
+        isFetching={isFetching}
+        onReset={resetFilters}
       />
 
-      <RoadmapsGrid roadmaps={roadmaps} search={search} />
+      <RoadmapsGrid
+        roadmaps={roadmaps}
+        search={search}
+        isLoading={isLoading}
+        isError={isError}
+      />
 
       <CareerTrajectorySection />
     </div>
