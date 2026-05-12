@@ -5,17 +5,16 @@ import { MdQuiz } from "react-icons/md";
 
 // ── Score Ring ─────────────────────────────────────────────────────────────
 
-const CIRCUMFERENCE = 2 * Math.PI * 28; // r=28 → 175.93
+const CIRCUMFERENCE = 2 * Math.PI * 28;
 
 function scoreColor(score) {
-  if (score >= 80) return "#16a34a"; // success
-  if (score >= 60) return "#d97706"; // warning
-  return "#ba1a1a"; // error
+  if (score >= 80) return "var(--color-success)";
+  if (score >= 60) return "var(--color-warning)";
+  return "var(--color-error)";
 }
 
 function ScoreRing({ score }) {
   const offset = CIRCUMFERENCE - (score / 100) * CIRCUMFERENCE;
-  const color = scoreColor(score);
 
   return (
     <div className="relative w-16 h-16 flex items-center justify-center shrink-0">
@@ -34,7 +33,7 @@ function ScoreRing({ score }) {
           cy="32"
           r="28"
           fill="transparent"
-          stroke={color}
+          stroke={scoreColor(score)}
           strokeWidth="4"
           strokeDasharray={CIRCUMFERENCE}
           strokeDashoffset={offset}
@@ -52,9 +51,10 @@ function ScoreRing({ score }) {
 // ── Skill Gap Badge ────────────────────────────────────────────────────────
 
 const GAP_STYLES = {
-  high: "bg-[#fef2f2] text-[#991b1b] border border-[#fecaca]",
-  medium: "bg-[#fffbeb] text-[#92400e] border border-[#fef3c7]",
-  low: "bg-[#f4f4f5] text-[#52525b] border border-[#e4e4e7]",
+  high: "bg-[var(--color-error-surface)] text-[var(--color-error-text)] border border-[var(--color-error-border)]",
+  medium:
+    "bg-[var(--color-warning-surface)] text-[var(--color-warning-text)] border border-[var(--color-warning-border)]",
+  low: "bg-[var(--color-neutral-surface)] text-[var(--color-neutral-text)] border border-[var(--color-neutral-border)]",
 };
 
 function SkillGapBadge({ skill, severity }) {
@@ -122,7 +122,7 @@ export default function AnalysisCard({ analysis }) {
               {matchedSkills.map((skill) => (
                 <span
                   key={skill}
-                  className="bg-[#f0fdf4] text-[#166534] px-2 py-0.5 text-[10px] font-bold rounded-sm border border-[#bbf7d0] uppercase"
+                  className="bg-surface text-success px-2 py-0.5 text-[10px] font-bold rounded-sm border border-success/80 uppercase"
                 >
                   {skill}
                 </span>

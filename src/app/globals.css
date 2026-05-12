@@ -56,6 +56,19 @@
   --color-success: #16a34a;
   --color-warning: #d97706;
 
+  /* ── Semantic badge surfaces ── */
+  --color-error-surface: #fef2f2;
+  --color-error-text: #991b1b;
+  --color-error-border: #fecaca;
+
+  --color-warning-surface: #fffbeb;
+  --color-warning-text: #92400e;
+  --color-warning-border: #fef3c7;
+
+  --color-neutral-surface: #f4f4f5;
+  --color-neutral-text: #52525b;
+  --color-neutral-border: #e4e4e7;
+
   /* ── Border Radius ── */
   --radius: 0.125rem;
   --radius-lg: 0.25rem;

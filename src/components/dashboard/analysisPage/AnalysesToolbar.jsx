@@ -33,6 +33,7 @@ function FilterDropdown({ label, icon: Icon, options, value, onChange }) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  // Recompute on every render — never cache outside the component
   const activeLabel = options.find((o) => o.value === value)?.label ?? label;
 
   return (
@@ -101,6 +102,7 @@ export default function AnalysesToolbar({ isFetching, onReset }) {
       {/* Filters */}
       <div className="md:col-span-6 flex flex-wrap justify-start md:justify-end gap-3">
         <FilterDropdown
+          key={scoreFilter}
           label="Match Score"
           icon={MdExpandMore}
           options={SCORE_OPTIONS}
@@ -108,6 +110,7 @@ export default function AnalysesToolbar({ isFetching, onReset }) {
           onChange={setScoreFilter}
         />
         <FilterDropdown
+          key={sortBy}
           label="Sort"
           icon={MdSwapVert}
           options={SORT_OPTIONS}
