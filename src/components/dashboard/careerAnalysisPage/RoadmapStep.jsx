@@ -11,6 +11,7 @@ import {
 import { MdOutlineCelebration, MdOutlineExpandMore } from "react-icons/md";
 import { generateLearningRoadMap } from "@/services/roadmap.service";
 import { useRouter } from "next/navigation";
+import { RxOpenInNewWindow } from "react-icons/rx";
 // ─── RoadmapTask ───────────────────────────────────────────────────────────────
 function RoadmapTask({ task, onToggle }) {
   return (
@@ -46,9 +47,7 @@ function RoadmapTask({ task, onToggle }) {
             rel="noopener noreferrer"
             className="font-mono-detail text-mono-detail text-primary hover:underline flex items-center gap-1"
           >
-            <span className="material-symbols-outlined text-[14px]">
-              open_in_new
-            </span>
+            <RxOpenInNewWindow size={14} />
             Resource
           </a>
         )}

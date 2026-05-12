@@ -253,3 +253,21 @@
   background-size: 800px 100%;
   animation: shimmer 1.4s ease-in-out infinite;
 }
+@keyframes detailsShimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+.detailsShimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--color-surface-container) / 1) 25%,
+    hsl(var(--color-surface-container-high) / 1) 50%,
+    hsl(var(--color-surface-container) / 1) 75%
+  );
+  background-size: 800px 100%;
+  animation: detailsShimmer 1.4s ease-in-out infinite;
+}
