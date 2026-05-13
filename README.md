@@ -319,3 +319,5 @@ Admin
 email: ajrabbyk72@gmail.com
 password: $Rabby12345
 ```
+
+## NOTE: I’ve restricted certain admin features because this access is being shared publicly.
