@@ -206,7 +206,7 @@ export default function RoadmapStep() {
 
   const handleCompleateStep = () => {
     reset();
-    router.push("/dashboard");
+    router.push("/dashboard/overview");
   };
 
   const handleToggleTask = (taskId) => {
