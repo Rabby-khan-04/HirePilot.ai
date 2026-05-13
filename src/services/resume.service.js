@@ -12,12 +12,17 @@ export const fetchResumes = async ({
 }) => {
   const params = new URLSearchParams({
     search,
-    status: statusFilter, // backend expects "status" not "statusFilter"
+    status: statusFilter,
     sortBy,
     page: String(page),
     limit: String(limit),
   });
 
   const { data } = await authClient.get(`/resumes?${params}`);
+  return data.data;
+};
+
+export const fetchResumeById = async (resumeId) => {
+  const { data } = await authClient.get(`/resumes/${resumeId}`);
   return data.data;
 };
