@@ -28,7 +28,7 @@ export function SectionHeader({ tag, title, description }) {
 export function StepContainer({ children, className = "" }) {
   return (
     <div
-      className={`bg-surface-container-lowest border border-outline-variant/30 p-10 shadow-sm relative overflow-hidden rounded ${className}`}
+      className={`bg-surface-container-lowest border border-outline-variant/30 p-6 md:p-10 shadow-sm relative overflow-hidden rounded ${className}`}
     >
       <div
         className="absolute inset-0 opacity-[0.02] pointer-events-none"
@@ -150,11 +150,11 @@ export function WorkflowActions({
   loading,
 }) {
   return (
-    <div className="mt-12 flex items-center justify-between">
+    <div className="mt-12 flex items-center justify-between flex-wrap gap-3">
       {onBack ? (
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors font-medium group"
+          className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors font-medium font-mono-label group"
         >
           <GoArrowLeft
             size={16}
@@ -169,7 +169,7 @@ export function WorkflowActions({
       <button
         onClick={onNext}
         disabled={nextDisabled || loading}
-        className="px-12 py-4 font-medium flex items-center gap-3 transition-all bg-primary text-on-primary hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed rounded"
+        className="px-12 py-4 font-medium flex items-center gap-3 transition-all bg-primary text-on-primary hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed rounded font-mono-label"
       >
         {loading ? "Processing..." : nextLabel}
         {!loading && (Icon ? <Icon size={18} /> : <GoArrowRight size={18} />)}

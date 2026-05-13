@@ -208,7 +208,7 @@ function DropZone({ file, onFile }) {
       onDragLeave={() => setIsDragging(false)}
       onDrop={handleDrop}
       onClick={() => inputRef.current?.click()}
-      className={`mt-4 border-2 border-dashed p-16 cursor-pointer transition-all duration-300 rounded ${
+      className={`mt-4 border-2 border-dashed p-margin-page cursor-pointer transition-all duration-300 rounded ${
         isDragging || file
           ? "border-primary bg-surface-container-low"
           : "border-outline-variant/50 hover:border-primary/50 hover:bg-surface-container-low"
@@ -232,7 +232,7 @@ function DropZone({ file, onFile }) {
         <div className="space-y-2 text-center">
           {file ? (
             <>
-              <p className="font-headline-md text-[20px] text-primary">
+              <p className="font-headline-md text-xs md:text-[20px] text-primary">
                 {file.name}
               </p>
               <p className="font-mono-detail text-mono-detail text-on-surface-variant">
@@ -322,6 +322,13 @@ export default function ResumeStep() {
 
         <DropZone file={file} onFile={setFile} />
 
+        <WorkflowActions
+          nextLabel="Parse Resume"
+          nextIcon={LuArrowRight}
+          nextDisabled={!file}
+          onNext={handleUpload}
+        />
+
         <div className="pt-10 flex items-center justify-between border-t border-outline-variant/20 mt-10 ">
           <div className="flex items-center gap-2 text-on-surface-variant">
             <MdOutlineVerifiedUser size={18} />
@@ -353,13 +360,6 @@ export default function ResumeStep() {
           </div>
         ))}
       </div>
-
-      <WorkflowActions
-        nextLabel="Parse Resume"
-        nextIcon={LuArrowRight}
-        nextDisabled={!file}
-        onNext={handleUpload}
-      />
     </div>
   );
 }

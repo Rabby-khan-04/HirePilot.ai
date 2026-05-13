@@ -20,7 +20,7 @@ export default function OverviewModules({ data, isLoading }) {
 
   return (
     <section>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-card-gap">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-card-gap">
         <ResumeModule resume={data?.resume} />
         <AnalysisModule analysis={data?.analysis} />
         <RoadmapModule roadmap={data?.roadmap} />

@@ -8,7 +8,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LuUser } from "react-icons/lu";
 import { PROFILE_MENU_ITEMS, PROFILE_LOGOUT } from "@/data/navbarData";
 import ProfileAvatar from "./ProfileAvatar";
 import ProfileUserInfo from "./ProfileUserInfo";

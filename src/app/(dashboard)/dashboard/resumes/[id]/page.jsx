@@ -25,21 +25,20 @@ export default function ResumeDetailPage({ params }) {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Header — sticky at top */}
       <ResumeDetailHeader resume={resume} />
-
       <ResumeDetailHero resume={resume} />
 
-      <div className="px-gutter grid grid-cols-12 gap-8 pb-24 items-start">
-        {/* Left column */}
-        <div className="col-span-12 lg:col-span-8 space-y-12">
+      {/* On lg+: fixed height container, left scrolls, right is static */}
+      <div className="px-gutter flex flex-col lg:flex-row gap-8 pb-24 items-start">
+        {/* Left column — scrolls naturally with the page */}
+        <div className="w-full lg:w-8/12 space-y-12">
           <ResumeExperience experience={resume.parsedData?.experience ?? []} />
           <ResumeProjects projects={resume.parsedData?.projects ?? []} />
           <ResumeRawText rawText={resume.rawText} />
         </div>
 
-        {/* Right column — offset by header height */}
-        <div className="col-span-12 lg:col-span-4 sticky top-20 max-h-[calc(100vh-73px)] overflow-y-auto">
+        {/* Right column — sticky, no height cap, no scroll */}
+        <div className="w-full lg:w-4/12 sticky top-20">
           <ResumeDetailSidebar resume={resume} />
         </div>
       </div>

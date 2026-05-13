@@ -42,7 +42,7 @@ export default function AnalysesGrid({
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-card-gap mt-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-card-gap mt-12">
         {renderContent()}
       </div>
 
