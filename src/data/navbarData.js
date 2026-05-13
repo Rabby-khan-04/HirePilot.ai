@@ -1,8 +1,8 @@
 import { LuLayoutDashboard, LuLogOut } from "react-icons/lu";
 
 export const NAV_LINKS = [
+  { label: "Demo", href: "/demo" },
   { label: "About", href: "/about" },
-  { label: "How it works", href: "/how-it-works" },
   { label: "Contact", href: "/contact" },
 ];
 
