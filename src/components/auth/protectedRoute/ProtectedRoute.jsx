@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingScreen from "@/components/shared/loading/LoadingScreen";
 import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -14,7 +15,7 @@ export default function ProtectedRoute({ children }) {
     }
   }, [isAuthenticated, isLoading, router]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingScreen />;
 
   if (!isAuthenticated) return null;
 
