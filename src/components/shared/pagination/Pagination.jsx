@@ -2,11 +2,7 @@
 
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
-export default function AnalysesPagination({
-  pagination,
-  currentPage,
-  onPageChange,
-}) {
+export default function Pagination({ pagination, currentPage, onPageChange }) {
   if (!pagination || pagination.totalPages <= 1) return null;
 
   const { total, limit, totalPages, hasNextPage, hasPrevPage } = pagination;

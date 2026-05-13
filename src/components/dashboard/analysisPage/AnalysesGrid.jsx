@@ -1,7 +1,6 @@
 "use client";
 
 import AnalysisCard from "./AnalysisCard";
-import AnalysesPagination from "./AnalysesPagination";
 import { useAnalysisFilterStore } from "@/store/useAnalysisFilterStore";
 import {
   EmptyAnalysesState,
@@ -10,6 +9,7 @@ import {
   ErrorState,
 } from "./AnalysesState";
 import { AnalysesShimmerGrid } from "@/components/shimmer/aiAnalysis/AnalysesShimmerGrid";
+import Pagination from "../../shared/pagination/Pagination";
 
 export default function AnalysesGrid({
   analyses,
@@ -46,7 +46,7 @@ export default function AnalysesGrid({
         {renderContent()}
       </div>
 
-      <AnalysesPagination
+      <Pagination
         pagination={pagination}
         currentPage={currentPage}
         onPageChange={onPageChange}

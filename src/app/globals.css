@@ -55,6 +55,9 @@
   --color-outline: #747878;
   --color-success: #16a34a;
   --color-warning: #d97706;
+  --color-success-surface: #f0fdf4;
+  --color-success-text: #15803d;
+  --color-success-border: #bbf7d0;
 
   /* ── Semantic badge surfaces ── */
   --color-error-surface: #fef2f2;
