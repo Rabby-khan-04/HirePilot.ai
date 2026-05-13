@@ -24,7 +24,7 @@ export default function AiInsights() {
         {insights.map((item) => (
           <div
             key={item.num}
-            className="flex gap-4 p-4 border border-outline-variant/20 bg-white/50"
+            className="flex gap-4 p-4 border border-outline-variant/20 bg-surface-container-lowest/50"
           >
             <span className="font-display-xl text-3xl text-primary/20">
               {item.num}

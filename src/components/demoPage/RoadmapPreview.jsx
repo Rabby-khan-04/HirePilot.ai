@@ -35,7 +35,7 @@ export default function RoadmapPreview() {
             key={week.label}
             className={`relative pl-8 border-l border-outline-variant/30 ${week.faded ? "opacity-40" : ""}`}
           >
-            <div className="absolute -left-1.25 top-0 w-2 h-2 rounded-full bg-primary border border-white" />
+            <div className="absolute -left-1.25 top-0 w-2 h-2 rounded-full bg-primary border border-surface-container-lowest" />
             <div className="text-xs font-mono-detail text-on-tertiary-container mb-1">
               {week.label}
             </div>

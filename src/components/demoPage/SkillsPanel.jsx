@@ -42,7 +42,7 @@ export default function SkillsPanel() {
   return (
     <div className="col-span-12 lg:col-span-8 flex flex-col gap-gutter">
       {/* Matched Skills */}
-      <div className="bg-white border border-outline-variant/50 p-8 rounded-lg">
+      <div className="bg-surface-container-lowest border border-outline-variant/50 p-8 rounded-lg">
         <div className="font-mono-label text-mono-label text-on-surface-variant mb-6 uppercase">
           Verified Competencies
         </div>
@@ -64,7 +64,7 @@ export default function SkillsPanel() {
         {gaps.map((gap) => (
           <div
             key={gap.skill}
-            className="border border-outline-variant/50 p-6 bg-white rounded-lg"
+            className="border border-outline-variant/50 p-6 bg-surface-container-lowest rounded-lg"
           >
             <div className="flex justify-between items-start mb-4">
               <span

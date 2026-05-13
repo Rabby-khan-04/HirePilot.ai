@@ -43,7 +43,7 @@ export default function InterviewPrep() {
   const [activeTab, setActiveTab] = useState("TECHNICAL");
 
   return (
-    <div className="col-span-12 lg:col-span-7 bg-white border border-outline-variant/50 rounded-lg overflow-hidden flex flex-col">
+    <div className="col-span-12 lg:col-span-7 bg-surface-container-lowest border border-outline-variant/50 rounded-lg overflow-hidden flex flex-col">
       {/* Tabs */}
       <div className="flex border-b border-outline-variant/30">
         {tabs.map((tab) => (

@@ -5,7 +5,7 @@ export default function MatchScoreCard() {
   const offset = circumference - (matchPercent / 100) * circumference;
 
   return (
-    <div className="col-span-12 lg:col-span-4 bg-white border border-outline-variant/50 p-8 rounded-lg flex flex-col items-center justify-center text-center">
+    <div className="col-span-12 lg:col-span-4 bg-surface-container-lowest border border-outline-variant/50 p-8 rounded-lg flex flex-col items-center justify-center text-center">
       <div className="font-mono-label text-mono-label text-on-surface-variant mb-8 self-start">
         SYSTEM ANALYSIS RESULT
       </div>

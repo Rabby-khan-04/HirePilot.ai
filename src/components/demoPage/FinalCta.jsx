@@ -10,10 +10,10 @@ export default function FinalCta() {
           upload a PDF to unlock the full potential of our AI Career Engine.
         </p>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
-          <button className="bg-primary text-on-primary font-body-md px-10 py-5 rounded shadow-xl hover:scale-105 active:scale-95 transition-all">
+          <button className="bg-primary text-on-primary font-mono px-10 py-5 rounded shadow-xl hover:scale-105 active:scale-95 transition-all">
             Sign Up Free
           </button>
-          <button className="border border-primary text-primary font-body-md px-10 py-5 rounded hover:bg-surface-container transition-all">
+          <button className="border border-primary text-primary font-mono px-10 py-5 rounded hover:bg-surface-container transition-all">
             Start Full Analysis
           </button>
         </div>

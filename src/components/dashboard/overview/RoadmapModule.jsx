@@ -13,7 +13,7 @@ export default function RoadmapModule({ roadmap }) {
   const primaryActive = activeRoadmaps[0];
 
   return (
-    <div className="bg-white border border-outline-variant rounded-lg p-6 space-y-6">
+    <div className="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 space-y-6">
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>

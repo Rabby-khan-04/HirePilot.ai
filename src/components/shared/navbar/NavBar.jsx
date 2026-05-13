@@ -7,6 +7,7 @@ import { NAV_LINKS } from "@/data/navbarData";
 import ProfileDropdown from "./ProfileDropdown";
 import MobileMenu from "./MobileMenu";
 import { useUserStore } from "@/store/userStore";
+import ThemeToggle from "../theme/ThemeToggle";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -39,6 +40,7 @@ export default function Navbar() {
 
           {/* Desktop right actions */}
           <div className="hidden md:flex items-center gap-4">
+            <ThemeToggle />
             {isAuthenticated ? (
               <ProfileDropdown user={user} />
             ) : (
@@ -59,14 +61,17 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            onClick={() => setMobileOpen(true)}
-            aria-label="Open menu"
-            className="md:hidden p-2 text-on-surface-variant hover:text-primary transition-colors"
-          >
-            <LuMenu size={22} />
-          </button>
+          {/* Mobile hamburger + toggle */}
+          <div className="md:hidden flex items-center gap-1">
+            <ThemeToggle />
+            <button
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+              className="p-2 text-on-surface-variant hover:text-primary transition-colors"
+            >
+              <LuMenu size={22} />
+            </button>
+          </div>
         </div>
       </nav>
 

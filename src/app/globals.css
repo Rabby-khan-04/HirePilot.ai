@@ -168,6 +168,9 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ─────────────────────────────────────────────────────────
+   LIGHT MODE (default)
+   ───────────────────────────────────────────────────────── */
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -201,40 +204,209 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* ── Custom semantic tokens (light) ── */
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+  --color-error-surface: #fef2f2;
+  --color-error-text: #991b1b;
+  --color-error-border: #fecaca;
+
+  --color-success: #16a34a;
+  --color-success-surface: #f0fdf4;
+  --color-success-text: #15803d;
+  --color-success-border: #bbf7d0;
+
+  --color-warning: #d97706;
+  --color-warning-surface: #fffbeb;
+  --color-warning-text: #92400e;
+  --color-warning-border: #fef3c7;
+
+  --color-neutral-surface: #f4f4f5;
+  --color-neutral-text: #52525b;
+  --color-neutral-border: #e4e4e7;
+
+  --color-nutral: #155dfc;
+
+  --color-background: #fdf8f8;
+  --color-on-background: #1c1b1b;
+  --color-surface: #fdf8f8;
+  --color-surface-bright: #fdf8f8;
+  --color-surface-dim: #ddd9d8;
+  --color-surface-tint: #5f5e5e;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f7f3f2;
+  --color-surface-container: #f1edec;
+  --color-surface-container-high: #ebe7e6;
+  --color-surface-container-highest: #e5e2e1;
+  --color-surface-variant: #e5e2e1;
+
+  --color-on-surface: #1c1b1b;
+  --color-on-surface-variant: #444748;
+
+  --color-primary: #000000;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #1c1b1b;
+  --color-on-primary-container: #858383;
+  --color-primary-fixed: #e5e2e1;
+  --color-primary-fixed-dim: #c8c6c5;
+  --color-on-primary-fixed: #1c1b1b;
+  --color-on-primary-fixed-variant: #474646;
+  --color-inverse-primary: #c8c6c5;
+
+  --color-secondary: #5d5f5f;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #dcdddd;
+  --color-on-secondary-container: #5f6161;
+  --color-secondary-fixed: #e2e2e2;
+  --color-secondary-fixed-dim: #c6c6c7;
+  --color-on-secondary-fixed: #1a1c1c;
+  --color-on-secondary-fixed-variant: #454747;
+
+  --color-tertiary: #000000;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #1d1b1a;
+  --color-on-tertiary-container: #868381;
+  --color-tertiary-fixed: #e6e1df;
+  --color-tertiary-fixed-dim: #cac6c3;
+  --color-on-tertiary-fixed: #1d1b1a;
+  --color-on-tertiary-fixed-variant: #484645;
+
+  --color-outline: #747878;
+  --color-outline-variant: #c4c7c7;
+  --color-inverse-surface: #313030;
+  --color-inverse-on-surface: #f4f0ef;
 }
 
+/* ─────────────────────────────────────────────────────────
+   DARK MODE
+   Strategy:
+   - Surfaces: warm dark neutrals (not pure black) to match
+     the warm off-white undertone of the light palette
+   - Primary: flips to near-white so text/buttons are legible
+   - Elevation hierarchy preserved: lowest → highest lightens
+   - Semantic colors: shifted to lighter/more saturated
+     variants that pass WCAG AA contrast on dark surfaces
+   - Outlines: softened so borders don't slash the eye
+   ───────────────────────────────────────────────────────── */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
+  --background: oklch(0.13 0 0);
+  --foreground: oklch(0.92 0 0);
+  --card: oklch(0.16 0 0);
+  --card-foreground: oklch(0.92 0 0);
+  --popover: oklch(0.16 0 0);
+  --popover-foreground: oklch(0.92 0 0);
+  --primary: oklch(0.92 0 0);
+  --primary-foreground: oklch(0.13 0 0);
+  --secondary: oklch(0.22 0 0);
+  --secondary-foreground: oklch(0.92 0 0);
+  --muted: oklch(0.22 0 0);
+  --muted-foreground: oklch(0.6 0 0);
+  --accent: oklch(0.22 0 0);
+  --accent-foreground: oklch(0.92 0 0);
+  --destructive: oklch(0.7 0.2 22);
   --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.5 0 0);
   --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --chart-2: oklch(0.7 0 0);
+  --chart-3: oklch(0.55 0 0);
+  --chart-4: oklch(0.4 0 0);
+  --chart-5: oklch(0.28 0 0);
+  --sidebar: oklch(0.16 0 0);
+  --sidebar-foreground: oklch(0.92 0 0);
+  --sidebar-primary: oklch(0.92 0 0);
+  --sidebar-primary-foreground: oklch(0.13 0 0);
+  --sidebar-accent: oklch(0.22 0 0);
+  --sidebar-accent-foreground: oklch(0.92 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: oklch(0.5 0 0);
+
+  /* ── Custom semantic tokens (dark) ── */
+
+  /* Error: lighter red, readable on dark bg */
+  --color-error: #ff897d;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+  --color-error-surface: #2d1515;
+  --color-error-text: #ff897d;
+  --color-error-border: #5c2020;
+
+  /* Success: lighter green */
+  --color-success: #4ade80;
+  --color-success-surface: #0f2d1a;
+  --color-success-text: #4ade80;
+  --color-success-border: #1a4d2e;
+
+  /* Warning: amber that pops on dark */
+  --color-warning: #fbbf24;
+  --color-warning-surface: #2d1f08;
+  --color-warning-text: #fbbf24;
+  --color-warning-border: #4d3310;
+
+  /* Neutral: dark surface, light text */
+  --color-neutral-surface: #27272a;
+  --color-neutral-text: #a1a1aa;
+  --color-neutral-border: #3f3f46;
+
+  --color-nutral: #6b9fff;
+
+  /* ── Surface scale (warm dark, elevation low→high = darker→lighter) ── */
+  --color-background: #141313;
+  --color-on-background: #e8e5e5;
+  --color-surface: #141313;
+  --color-surface-bright: #2e2c2b;
+  --color-surface-dim: #0f0e0e;
+  --color-surface-tint: #c8c6c5;
+  --color-surface-container-lowest: #0f0e0e;
+  --color-surface-container-low: #1c1b1a;
+  --color-surface-container: #232120;
+  --color-surface-container-high: #2c2a29;
+  --color-surface-container-highest: #363332;
+  --color-surface-variant: #3a3837;
+
+  --color-on-surface: #e8e5e5;
+  --color-on-surface-variant: #a8abab;
+
+  /* ── Primary: inverted to near-white ── */
+  --color-primary: #e8e5e5;
+  --color-on-primary: #141313;
+  --color-primary-container: #e5e2e1;
+  --color-on-primary-container: #1c1b1b;
+  --color-primary-fixed: #1c1b1b;
+  --color-primary-fixed-dim: #313030;
+  --color-on-primary-fixed: #e8e5e5;
+  --color-on-primary-fixed-variant: #c8c6c5;
+  --color-inverse-primary: #313030;
+
+  /* ── Secondary ── */
+  --color-secondary: #a8abab;
+  --color-on-secondary: #141313;
+  --color-secondary-container: #2e3030;
+  --color-on-secondary-container: #c8cbcb;
+  --color-secondary-fixed: #2e3030;
+  --color-secondary-fixed-dim: #474a4a;
+  --color-on-secondary-fixed: #e2e2e2;
+  --color-on-secondary-fixed-variant: #9da0a0;
+
+  /* ── Tertiary ── */
+  --color-tertiary: #e8e5e5;
+  --color-on-tertiary: #141313;
+  --color-tertiary-container: #e6e1df;
+  --color-on-tertiary-container: #1d1b1a;
+  --color-tertiary-fixed: #2e2c2b;
+  --color-tertiary-fixed-dim: #474544;
+  --color-on-tertiary-fixed: #e6e1df;
+  --color-on-tertiary-fixed-variant: #c8c4c2;
+
+  /* ── Outlines ── */
+  --color-outline: #8a8d8d;
+  --color-outline-variant: #3a3d3d;
+  --color-inverse-surface: #e5e2e1;
+  --color-inverse-on-surface: #313030;
 }
 
 @layer base {

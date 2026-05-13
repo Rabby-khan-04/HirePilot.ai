@@ -7,6 +7,7 @@ import {
   IoMdNotificationsOutline,
   IoIosHelpCircleOutline,
 } from "react-icons/io";
+import ThemeToggle from "../theme/ThemeToggle";
 
 export default function DashboardTopNav() {
   const user = useUserStore((s) => s.user);
@@ -36,6 +37,7 @@ export default function DashboardTopNav() {
         <button className="text-on-surface-variant p-2 hover:bg-surface-container-high rounded-full transition-colors">
           <IoIosHelpCircleOutline size={24} />
         </button>
+        <ThemeToggle />
         <button className="bg-primary text-on-primary px-6 py-2 rounded-full font-medium hover:opacity-90 transition-all">
           Upgrade
         </button>

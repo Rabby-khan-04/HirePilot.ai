@@ -48,8 +48,8 @@ export default function WorkspaceSection() {
                 onClick={() => setSelected(r.key)}
                 className={`p-6 border text-left transition-all rounded shadow-sm ${
                   selected === r.key
-                    ? "border-primary bg-white"
-                    : "border-outline-variant bg-white hover:border-primary"
+                    ? "border-primary bg-surface-container-lowest"
+                    : "border-outline-variant bg-surface-container-lowest hover:border-primary"
                 }`}
               >
                 <span
@@ -72,7 +72,7 @@ export default function WorkspaceSection() {
             02. Target Job Role
           </label>
           <div className="relative group">
-            <select className="w-full bg-white border-b-2 border-outline-variant p-6 appearance-none font-headline-md text-headline-md focus:border-primary focus:outline-none transition-all cursor-pointer">
+            <select className="w-full bg-surface-container-lowest border-b-2 border-outline-variant p-6 appearance-none font-headline-md text-headline-md focus:border-primary focus:outline-none transition-all cursor-pointer">
               <option>Senior Frontend Engineer</option>
               <option>Node.js Backend Architect</option>
               <option>Full Stack Developer</option>

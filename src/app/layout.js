@@ -3,6 +3,7 @@ import "./globals.css";
 import AuthProvider from "@/provider/AuthProvider";
 import QueryProvider from "@/provider/QueryProvider";
 import { Toaster } from "react-hot-toast";
+import ThemeInitializer from "@/components/shared/theme/ThemeInitializer";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -42,6 +43,7 @@ export default function RootLayout({ children }) {
       <body className="bg-surface text-on-surface font-body-md">
         <QueryProvider>
           <AuthProvider>
+            <ThemeInitializer />
             {children}
             <Toaster position="top-right" />
           </AuthProvider>
