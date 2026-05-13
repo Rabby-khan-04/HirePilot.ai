@@ -11,6 +11,7 @@ import {
   MdHelpOutline,
   MdLogout,
 } from "react-icons/md";
+import { TbHomeShare } from "react-icons/tb";
 
 const NAV_LINKS = [
   {
@@ -38,6 +39,11 @@ const NAV_LINKS = [
     icon: MdOutlineDescription,
     label: "Resumes",
   },
+  {
+    href: "/",
+    icon: TbHomeShare,
+    label: "Back To Home",
+  },
 ];
 
 const FOOTER_LINKS = [
@@ -57,7 +63,9 @@ export default function DashboardSidebar() {
   const pathname = usePathname();
 
   const isActive = (href) =>
-    href === "/dashboard" ? pathname === href : pathname.startsWith(href);
+    href === "/dashboard"
+      ? pathname === href
+      : pathname.startsWith(href) && href !== "/";
 
   return (
     <nav className="fixed left-0 top-0 z-40 flex h-full w-64 flex-col border-r border-outline-variant/50 bg-surface p-grid-unit">

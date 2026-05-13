@@ -9,6 +9,7 @@ import AuthPasswordField from "../ui/AuthPasswordField";
 import AuthSocialButtons from "../ui/AuthSocialButtons";
 import { registerSchema } from "@/lib/validations/auth.validation";
 import { useRegister } from "@/hooks/auth/useRegister";
+import { MdOutlineOpenInNew } from "react-icons/md";
 
 export default function RegisterForm() {
   const { mutate, isPending, isError } = useRegister();
@@ -132,6 +133,13 @@ export default function RegisterForm() {
             Sign In
           </Link>
         </p>
+        <Link
+          href="/"
+          className="font-mono-detail text-mono-detail text-on-surface-variant inline-flex items-center gap-3 underline"
+        >
+          <p>Back to Home</p>
+          <MdOutlineOpenInNew />
+        </Link>
       </div>
     </AuthCard>
   );

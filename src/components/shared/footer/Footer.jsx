@@ -20,7 +20,7 @@ export default function Footer() {
           )}
         </div>
 
-        <div className="font-mono-detail text-mono-detail text-on-surface-variant">
+        <div className="font-mono-detail text-mono-detail text-on-surface-variant text-center md:text-right">
           © 2024 HirePilot AI. Precision Engineering for Modern Careers.
         </div>
       </div>

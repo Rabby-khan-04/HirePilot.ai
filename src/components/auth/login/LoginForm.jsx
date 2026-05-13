@@ -10,6 +10,7 @@ import AuthPasswordField from "../ui/AuthPasswordField";
 import AuthSocialButtons from "../ui/AuthSocialButtons";
 import { loginSchema } from "@/lib/validations/auth.validation";
 import { useLogin } from "@/hooks/auth/useLogin";
+import { MdOutlineOpenInNew } from "react-icons/md";
 
 export default function LoginForm() {
   const { mutate, isPending, isError } = useLogin();
@@ -110,6 +111,13 @@ export default function LoginForm() {
             Create Account
           </Link>
         </p>
+        <Link
+          href="/"
+          className="font-mono-detail text-mono-detail text-on-surface-variant inline-flex items-center gap-3 underline"
+        >
+          <p>Back to Home</p>
+          <MdOutlineOpenInNew />
+        </Link>
       </div>
     </AuthCard>
   );

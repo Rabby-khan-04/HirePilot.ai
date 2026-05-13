@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  /* ── Colors ── */
+  /* ── Colors ── (unchanged) */
   --color-error: #ba1a1a;
   --color-inverse-surface: #313030;
   --color-on-background: #1c1b1b;
@@ -59,34 +59,34 @@
   --color-success-text: #15803d;
   --color-success-border: #bbf7d0;
   --color-nutral: #155dfc;
-
-  /* ── Semantic badge surfaces ── */
   --color-error-surface: #fef2f2;
   --color-error-text: #991b1b;
   --color-error-border: #fecaca;
-
   --color-warning-surface: #fffbeb;
   --color-warning-text: #92400e;
   --color-warning-border: #fef3c7;
-
   --color-neutral-surface: #f4f4f5;
   --color-neutral-text: #52525b;
   --color-neutral-border: #e4e4e7;
 
-  /* ── Border Radius ── */
+  /* ── Border Radius ── (unchanged) */
   --radius: 0.125rem;
   --radius-lg: 0.25rem;
   --radius-xl: 0.5rem;
   --radius-full: 0.75rem;
 
-  /* ── Spacing ── */
-  --spacing-margin-page: 64px;
-  --spacing-gutter: 24px;
-  --spacing-section-padding: 120px;
-  --spacing-card-gap: 16px;
-  --spacing-grid-unit: 8px;
+  /* ── Spacing — fluid, mobile → desktop ──
+     clamp(min, preferred, max)
+     min   = 375px viewport (mobile)
+     max   = 1440px viewport (desktop)
+  */
+  --spacing-margin-page: clamp(16px, 4vw, 64px);
+  --spacing-gutter: clamp(12px, 2vw, 24px);
+  --spacing-section-padding: clamp(48px, 8vw, 120px);
+  --spacing-card-gap: clamp(12px, 1.5vw, 16px);
+  --spacing-grid-unit: clamp(6px, 1vw, 8px);
 
-  /* ── Font Families ── */
+  /* ── Font Families ── (unchanged) */
   --font-body-md: "Inter", sans-serif;
   --font-mono-detail: "JetBrains Mono", monospace;
   --font-mono-label: "JetBrains Mono", monospace;
@@ -94,32 +94,41 @@
   --font-headline-md: "Playfair Display", serif;
   --font-display-xl: "Playfair Display", serif;
 
-  /* ── Font Sizes + companions ── */
-  --text-body-md: 16px;
+  /* ── Font Sizes — fluid, mobile → desktop ──
+     Formula: clamp(mobile-size, viewport-unit, desktop-size)
+  */
+
+  /* body-md: 14px → 16px */
+  --text-body-md: clamp(14px, 1.2vw, 16px);
   --text-body-md--line-height: 1.6;
   --text-body-md--letter-spacing: -0.01em;
   --text-body-md--font-weight: 400;
 
-  --text-mono-detail: 13px;
+  /* mono-detail: 11px → 13px */
+  --text-mono-detail: clamp(11px, 1vw, 13px);
   --text-mono-detail--line-height: 1.4;
   --text-mono-detail--font-weight: 400;
 
-  --text-mono-label: 12px;
+  /* mono-label: 10px → 12px */
+  --text-mono-label: clamp(10px, 0.9vw, 12px);
   --text-mono-label--line-height: 1.5;
   --text-mono-label--letter-spacing: 0.05em;
   --text-mono-label--font-weight: 500;
 
-  --text-headline-lg: 48px;
+  /* headline-lg: 28px → 48px */
+  --text-headline-lg: clamp(28px, 4vw, 48px);
   --text-headline-lg--line-height: 1.2;
   --text-headline-lg--letter-spacing: -0.03em;
   --text-headline-lg--font-weight: 600;
 
-  --text-headline-md: 32px;
+  /* headline-md: 20px → 32px */
+  --text-headline-md: clamp(20px, 2.8vw, 32px);
   --text-headline-md--line-height: 1.3;
   --text-headline-md--letter-spacing: -0.02em;
   --text-headline-md--font-weight: 500;
 
-  --text-display-xl: 80px;
+  /* display-xl: 36px → 80px */
+  --text-display-xl: clamp(36px, 6.5vw, 80px);
   --text-display-xl--line-height: 1.1;
   --text-display-xl--letter-spacing: -0.04em;
   --text-display-xl--font-weight: 600;
@@ -278,6 +287,7 @@
   --color-outline-variant: #c4c7c7;
   --color-inverse-surface: #313030;
   --color-inverse-on-surface: #f4f0ef;
+  --color-grid-line: rgba(0, 0, 0, 0.03);
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -407,6 +417,7 @@
   --color-outline-variant: #3a3d3d;
   --color-inverse-surface: #e5e2e1;
   --color-inverse-on-surface: #313030;
+  --color-grid-line: rgba(255, 255, 255, 0.03);
 }
 
 @layer base {
