@@ -7,7 +7,7 @@ export const NAV_LINKS = [
 ];
 
 export const PROFILE_MENU_ITEMS = [
-  { label: "Dashboard", href: "/dashboard", icon: LuLayoutDashboard },
+  { label: "Dashboard", href: "/dashboard/overview", icon: LuLayoutDashboard },
 ];
 
 export const PROFILE_LOGOUT = { label: "Logout", icon: LuLogOut };

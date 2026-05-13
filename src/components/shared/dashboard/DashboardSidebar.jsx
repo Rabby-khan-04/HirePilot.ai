@@ -14,7 +14,7 @@ import {
 
 const NAV_LINKS = [
   {
-    href: "/dashboard",
+    href: "/dashboard/overview",
     icon: MdOutlineDashboard,
     label: "Dashboard",
   },

@@ -217,7 +217,7 @@ export default function ResumeCard({ resume }) {
         {isCompleted && (
           <Link
             href={`/dashboard/resumes/${_id}`}
-            className="flex-1 bg-primary text-on-primary py-2 rounded text-sm font-headline-md hover:opacity-90 transition-all text-center"
+            className="flex-1 bg-primary text-on-primary py-2 rounded text-sm font-mono-label uppercase hover:opacity-90 transition-all text-center"
           >
             View Resume
           </Link>
@@ -225,13 +225,13 @@ export default function ResumeCard({ resume }) {
         {isProcessing && (
           <button
             disabled
-            className="flex-1 bg-surface-container-highest text-on-surface-variant py-2 rounded text-sm font-headline-md cursor-not-allowed"
+            className="flex-1 bg-surface-container-highest text-on-surface-variant py-2 rounded text-sm font-mono-label uppercase  cursor-not-allowed"
           >
             Analyzing...
           </button>
         )}
         {isFailed && (
-          <button className="flex-1 bg-primary text-on-primary py-2 rounded text-sm font-headline-md hover:opacity-90 transition-all flex items-center justify-center gap-2">
+          <button className="flex-1 bg-primary text-on-primary py-2 rounded text-sm font-mono-label uppercase hover:opacity-90 transition-all flex items-center justify-center gap-2">
             <MdRefresh size={16} />
             Retry Upload
           </button>
