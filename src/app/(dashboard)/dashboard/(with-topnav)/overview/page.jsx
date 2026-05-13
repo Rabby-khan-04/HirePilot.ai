@@ -10,7 +10,7 @@ export default function OverviewPage() {
   const { data, isLoading, isError } = useOverview();
 
   return (
-    <div className="px-margin-page pb-24 space-y-section-padding">
+    <div className="px-margin-page py-margin-page space-y-section-padding">
       <OverviewHero data={data} isLoading={isLoading} />
       <OverviewModules data={data} isLoading={isLoading} />
       <OverviewInsights data={data} />
