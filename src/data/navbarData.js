@@ -3,7 +3,7 @@ import { LuLayoutDashboard, LuLogOut } from "react-icons/lu";
 export const NAV_LINKS = [
   { label: "About", href: "/about" },
   { label: "How it works", href: "/how-it-works" },
-  { label: "Pricing", href: "/pricing" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const PROFILE_MENU_ITEMS = [
