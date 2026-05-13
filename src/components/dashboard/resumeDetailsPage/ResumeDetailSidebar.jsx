@@ -6,9 +6,9 @@ import {
   MdAutoAwesome,
 } from "react-icons/md";
 
-function ReadinessScore() {
+function ReadinessScore({ score }) {
   // Static for now — wire to AI analysis score when available
-  const score = 94;
+  // const score = 94;
   return (
     <div className="bg-primary text-on-primary p-8 rounded-xl">
       <span className="font-mono-label text-[10px] opacity-70 block mb-6 uppercase tracking-widest">
@@ -54,7 +54,7 @@ function SkillsCard({ skills }) {
   );
 }
 
-function AIInsightsCard() {
+function AIInsightsCard({ insights }) {
   // Placeholder — wire to real AI insights from analysis when available
   return (
     <div className="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl relative overflow-hidden">
@@ -66,14 +66,35 @@ function AIInsightsCard() {
         AI Insights
       </h5>
       <div className="space-y-3">
-        <div className="p-3 bg-surface-container-low rounded-lg">
-          <p className="font-mono-label text-[10px] text-primary mb-1 uppercase">
-            Strength
-          </p>
-          <p className="font-body-md text-sm text-on-surface-variant">
-            Run an AI analysis to unlock personalized insights for this resume.
-          </p>
-        </div>
+        {insights.strength ? null : (
+          <div className="p-3 bg-surface-container-low rounded-lg">
+            <p className="font-body-md text-sm text-on-surface-variant">
+              Run an AI analysis to unlock personalized insights for this
+              resume.
+            </p>
+          </div>
+        )}
+
+        {insights.strength ? (
+          <div className="p-3 bg-surface-container-low rounded-lg">
+            <p className="font-mono-label text-[10px] text-primary mb-1 uppercase">
+              Strength
+            </p>
+            <p className="font-body-md text-sm text-on-surface-variant">
+              {insights.strength}
+            </p>
+          </div>
+        ) : null}
+        {insights.improvement ? (
+          <div className="p-3 bg-surface-container-low rounded-lg">
+            <p className="font-mono-label text-[10px] text-primary mb-1 uppercase">
+              improvement
+            </p>
+            <p className="font-body-md text-sm text-on-surface-variant">
+              {insights.improvement}
+            </p>
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -120,8 +141,8 @@ function ActionsCard({ resumeId }) {
 export default function ResumeDetailSidebar({ resume }) {
   return (
     <div className="space-y-6">
-      <ReadinessScore />
-      <AIInsightsCard />
+      <ReadinessScore score={resume.score} />
+      <AIInsightsCard insights={resume.insights} />
       <SkillsCard skills={resume.parsedData?.skills} />
       <ActionsCard resumeId={resume._id} />
     </div>

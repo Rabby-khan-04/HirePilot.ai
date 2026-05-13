@@ -18,7 +18,7 @@ export default function ResumeDetailHero({ resume }) {
                 </div>
               )}
               <h3 className="font-headline-lg text-3xl font-semibold mb-2">
-                Engineered Success
+                {resume.title}
               </h3>
               <p className="font-body-md text-sm text-on-surface-variant max-w-md leading-relaxed">
                 Your resume has been processed through HirePilot{"'"}s core
