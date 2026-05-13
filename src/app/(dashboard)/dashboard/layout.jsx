@@ -1,6 +1,5 @@
 import ProtectedRoute from "@/components/auth/protectedRoute/ProtectedRoute";
 import DashboardSidebar from "@/components/shared/dashboard/DashboardSidebar";
-import DashboardTopNav from "@/components/shared/dashboard/DashboardTopNav";
 
 export const metadata = {
   title: "Dashboard — HirePilot AI",
@@ -12,7 +11,6 @@ export default function DashboardLayout({ children }) {
       <div className="min-h-screen bg-surface text-on-background font-body-md">
         <DashboardSidebar />
         <main className="ml-64 min-h-screen flex flex-col">
-          <DashboardTopNav />
           {children}
           <footer className="mt-auto border-t border-outline-variant/20 py-8 px-margin-page flex justify-between items-center opacity-60">
             <span className="font-mono-label text-mono-label text-on-surface-variant uppercase">
