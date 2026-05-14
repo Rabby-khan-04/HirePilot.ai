@@ -23,6 +23,10 @@ export async function middleware(req) {
   const { pathname } = req.nextUrl;
   const cookie = req.headers.get("cookie") ?? "";
 
+  console.log("Middleware running for:", pathname);
+  console.log("Cookies present:", cookie ? "YES" : "NO - empty");
+  console.log("Cookie value:", cookie);
+
   if (isMatch(pathname, PUBLIC_PATHS)) return NextResponse.next();
 
   // all /dashboard/* — must be logged in
