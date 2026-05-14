@@ -22,21 +22,33 @@ const isExactMatch = (pathname, paths) => paths.includes(pathname);
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
   const cookie = req.headers.get("cookie") ?? "";
+  const origin = req.nextUrl.origin; // https://hire-pilot-ai.vercel.app
 
-  console.log("Middleware running for:-", pathname);
-  console.log("Cookies present:", cookie ? "YES" : "NO - empty");
-  console.log("Cookie value:", cookie);
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+  console.log("pathname:", pathname);
+  console.log("origin:", origin);
+  console.log("has accessToken:", cookie.includes("accessToken"));
 
   if (isMatch(pathname, PUBLIC_PATHS)) return NextResponse.next();
 
   // all /dashboard/* — must be logged in
   if (isMatch(pathname, AUTH_PATHS)) {
     try {
-      const res = await fetch(`${process.env.API_URL}/users/user`, {
+      const url = `${origin}/api/v1/users/user`;
+      console.log("fetching:", url);
+
+      const res = await fetch(url, {
         headers: { Cookie: cookie },
       });
-      if (!res.ok) return NextResponse.redirect(new URL("/login", req.url));
-    } catch {
+
+      console.log("auth status:", res.status);
+
+      if (!res.ok) {
+        console.log("auth failed → redirecting to /login");
+        return NextResponse.redirect(new URL("/login", req.url));
+      }
+    } catch (error) {
+      console.log("auth error:", error);
       return NextResponse.redirect(new URL("/login", req.url));
     }
   }
@@ -44,14 +56,15 @@ export async function middleware(req) {
   // exact /dashboard — admin only
   if (isExactMatch(pathname, ADMIN_ONLY_EXACT)) {
     try {
-      const res = await fetch(`${process.env.API_URL}/users/auth`, {
+      const res = await fetch(`${origin}/api/v1/users/auth`, {
         headers: { Cookie: cookie },
       });
+
       if (!res.ok) return NextResponse.redirect(new URL("/login", req.url));
 
       const { data } = await res.json();
       if (data !== true)
-        return NextResponse.redirect(new URL("/dashboard/resumes", req.url)); // redirect users to their page
+        return NextResponse.redirect(new URL("/dashboard/resumes", req.url));
     } catch {
       return NextResponse.redirect(new URL("/dashboard/resumes", req.url));
     }
@@ -60,9 +73,10 @@ export async function middleware(req) {
   // /dashboard/admin/* — admin only
   if (isMatch(pathname, ADMIN_PATHS)) {
     try {
-      const res = await fetch(`${process.env.API_URL}/users/auth`, {
+      const res = await fetch(`${origin}/api/v1/users/auth`, {
         headers: { Cookie: cookie },
       });
+
       if (!res.ok) return NextResponse.redirect(new URL("/login", req.url));
 
       const { data } = await res.json();
