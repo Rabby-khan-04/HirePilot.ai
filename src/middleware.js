@@ -28,9 +28,12 @@ export async function middleware(req) {
   // all /dashboard/* — must be logged in
   if (isMatch(pathname, AUTH_PATHS)) {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/user`, {
-        headers: { Cookie: cookie },
-      });
+      const res = await fetch(
+        `https://hirepilot-ai-server.vercel.app/api/v1/users/user`,
+        {
+          headers: { Cookie: cookie },
+        },
+      );
       if (!res.ok) return NextResponse.redirect(new URL("/login", req.url));
     } catch {
       return NextResponse.redirect(new URL("/login", req.url));
@@ -40,9 +43,12 @@ export async function middleware(req) {
   // exact /dashboard — admin only
   if (isExactMatch(pathname, ADMIN_ONLY_EXACT)) {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/auth`, {
-        headers: { Cookie: cookie },
-      });
+      const res = await fetch(
+        `https://hirepilot-ai-server.vercel.app/api/v1/users/auth`,
+        {
+          headers: { Cookie: cookie },
+        },
+      );
       if (!res.ok) return NextResponse.redirect(new URL("/login", req.url));
 
       const { data } = await res.json();
@@ -56,9 +62,12 @@ export async function middleware(req) {
   // /dashboard/admin/* — admin only
   if (isMatch(pathname, ADMIN_PATHS)) {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/auth`, {
-        headers: { Cookie: cookie },
-      });
+      const res = await fetch(
+        `https://hirepilot-ai-server.vercel.app/api/v1/users/auth`,
+        {
+          headers: { Cookie: cookie },
+        },
+      );
       if (!res.ok) return NextResponse.redirect(new URL("/login", req.url));
 
       const { data } = await res.json();
