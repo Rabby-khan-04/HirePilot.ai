@@ -13,6 +13,7 @@ import { LuMenu } from "react-icons/lu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import ThemeToggle from "../theme/ThemeToggle";
 import { MobileSidebarContent } from "./MobileSidebarContent";
+import Link from "next/link";
 
 export default function DashboardTopNav() {
   const user = useUserStore((s) => s.user);
@@ -41,9 +42,12 @@ export default function DashboardTopNav() {
           </SheetContent>
         </Sheet>
 
-        <span className="font-headline-md text-headline-md font-semibold tracking-tight text-primary">
+        <Link
+          href="/"
+          className="font-headline-md text-headline-md font-semibold tracking-tight text-primary"
+        >
           HirePilot AI
-        </span>
+        </Link>
 
         <div className="hidden md:flex items-center gap-1 bg-surface-container rounded-full px-3 py-1">
           <IoIosSearch size={18} className="text-on-surface-variant" />

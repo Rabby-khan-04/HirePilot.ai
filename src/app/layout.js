@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
         antialiased
       `}
     >
-      <body className="bg-surface text-on-surface font-body-md">
+      <body className="bg-surface text-on-surface font-body-md relative">
         <QueryProvider>
           <AuthProvider>
             <ThemeInitializer />

@@ -52,7 +52,7 @@ export default function MobileMenu({ open, onClose, isAuthenticated }) {
         <div className="p-6 border-t border-outline-variant flex flex-col gap-3">
           {isAuthenticated ? (
             <Link
-              href="/dashboard"
+              href="/dashboard/overview"
               onClick={onClose}
               className="w-full text-center bg-primary text-on-primary font-mono-label text-mono-label px-6 py-3 hover:opacity-90 transition-all"
             >

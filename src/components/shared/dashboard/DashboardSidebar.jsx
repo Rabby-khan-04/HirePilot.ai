@@ -48,7 +48,7 @@ export default function DashboardSidebar() {
       {/* Brand */}
       <div className="mb-8 px-4 py-8">
         <h1 className="font-headline-md text-headline-md font-bold text-primary">
-          HirePilot AI
+          <Link href="/">HirePilot AI</Link>
         </h1>
         <p className="font-mono-label text-mono-label uppercase tracking-widest text-on-surface-variant">
           Precision AI

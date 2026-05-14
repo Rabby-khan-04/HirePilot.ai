@@ -48,7 +48,7 @@ export default function RoadmapDetailPage() {
       {/* Breadcrumbs */}
       <nav className="flex items-center gap-2 mb-6 font-mono-label text-mono-label uppercase text-on-surface-variant">
         <Link
-          href="/dashboard"
+          href="/dashboard/overview"
           className="hover:text-primary transition-colors"
         >
           Dashboard

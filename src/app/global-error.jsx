@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdRefresh, MdDashboard, MdErrorOutline } from "react-icons/md";
 
@@ -150,13 +151,13 @@ export default function GlobalError({ error, reset }) {
                 <MdRefresh className="text-xl" />
                 Try Again
               </button>
-              <a
-                href="/dashboard"
+              <Link
+                href="/dashboard/overview"
                 className="w-full sm:w-auto px-8 py-3 bg-transparent border border-white/20 text-white font-medium rounded-lg hover:bg-white/5 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
               >
                 <MdDashboard className="text-xl" />
                 Go To Dashboard
-              </a>
+              </Link>
             </div>
 
             {/* Dynamic Error Meta */}

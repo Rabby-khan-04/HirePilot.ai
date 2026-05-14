@@ -39,11 +39,11 @@ export default function LoadingScreen() {
             <div className="absolute w-12 h-12 bg-white/10 rounded-full blur-xl animate-pulse" />
 
             {/* Rotating Ring */}
-            <div className="w-16 h-16 rounded-[50%] border-4 border-t-white border-r-white/20 border-b-white/5 border-l-white/40 animate-spin" />
+            <div className="w-16 h-16 rounded-[50%] border-4 border-t-on-primary border-r-white/20 border-b-white/5 border-l-white/40 animate-spin" />
 
             {/* Center Icon */}
             <div className="absolute w-8 h-8 flex items-center justify-center ">
-              <GrCodeSandbox size={36} />
+              <GrCodeSandbox size={36} className="text-surface" />
             </div>
           </div>
 

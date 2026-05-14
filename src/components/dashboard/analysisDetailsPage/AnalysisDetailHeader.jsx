@@ -14,7 +14,7 @@ export default function AnalysisDetailHeader({
       <div>
         <nav className="flex items-center gap-2 font-mono-label text-mono-label text-on-surface-variant mb-4 uppercase flex-wrap">
           <Link
-            href="/dashboard"
+            href="/dashboard/overview"
             className="hover:text-primary transition-colors"
           >
             Dashboard
