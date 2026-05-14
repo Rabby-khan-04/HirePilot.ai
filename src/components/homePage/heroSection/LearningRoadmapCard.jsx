@@ -20,7 +20,7 @@ export default function LearningRoadmapCard() {
         {STEPS.map(({ label, state }) => (
           <div
             key={label}
-            className="relative z-10 flex flex-col items-center gap-2"
+            className="relative z-10 flex flex-col items-center gap-2 bg-primary"
           >
             {state === true && (
               <div className="w-8 h-8 rounded-full bg-on-primary flex items-center justify-center text-primary">

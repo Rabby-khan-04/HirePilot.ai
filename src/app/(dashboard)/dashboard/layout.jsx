@@ -16,7 +16,7 @@ export default function DashboardLayout({ children }) {
           below lg: offset by mobile top bar height (~57px)
         */}
         <main className="flex min-h-screen flex-col pt-0 lg:ml-64 lg:pt-0">
-          <div className="flex-1 px-4 py-6 md:px-8 md:py-8">{children}</div>
+          <div className="flex-1">{children}</div>
 
           <footer className="mt-auto border-t border-outline-variant/20 py-6 px-4 md:px-margin-page items-center flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center opacity-60">
             <span className="font-mono-label text-mono-label text-on-surface-variant uppercase">

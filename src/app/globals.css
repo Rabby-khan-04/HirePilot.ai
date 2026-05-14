@@ -472,6 +472,16 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  .grid-overlay {
+    background-image: linear-gradient(to right, #ffffff05 1px, transparent 1px);
+    background-size: 8.333333% 100%;
+  }
+
+  .glow-sphere {
+    filter: blur(120px);
+    opacity: 0.15;
+  }
 }
 
 @keyframes shimmer {
