@@ -13,8 +13,15 @@ import {
 } from "react-icons/md";
 import { TbHomeShare } from "react-icons/tb";
 import { logout } from "@/services/auth.service";
+import { useUserStore } from "@/store/userStore";
 
 const NAV_LINKS = [
+  {
+    href: "/dashboard",
+    icon: MdOutlineDashboard,
+    label: "Admin Dashboard",
+    forAdmin: true,
+  },
   { href: "/dashboard/overview", icon: MdOutlineDashboard, label: "Dashboard" },
   {
     href: "/dashboard/career-analysis",
@@ -33,11 +40,13 @@ const NAV_LINKS = [
 
 export function MobileSidebarContent({ onNavigate }) {
   const pathname = usePathname();
+  const { user } = useUserStore();
 
   const isActive = (href) =>
     href === "/dashboard"
       ? pathname === href
       : pathname.startsWith(href) && href !== "/";
+  const isAdmin = user.role === "admin";
 
   return (
     <div className="flex h-full flex-col">
@@ -53,23 +62,25 @@ export function MobileSidebarContent({ onNavigate }) {
 
       {/* Nav links */}
       <div className="flex-1 space-y-1">
-        {NAV_LINKS.map(({ href, icon: Icon, label }) => (
-          <Link
-            key={href}
-            href={href}
-            onClick={onNavigate}
-            className={`flex items-center gap-3 rounded-lg px-4 py-3 transition-all duration-200 ${
-              isActive(href)
-                ? "bg-primary font-medium text-on-primary shadow-sm"
-                : "text-on-surface-variant hover:bg-surface-container-high"
-            }`}
-          >
-            <Icon size={20} />
-            <span className="font-mono-label text-mono-label uppercase tracking-widest">
-              {label}
-            </span>
-          </Link>
-        ))}
+        {NAV_LINKS.map(({ href, icon: Icon, label, forAdmin }) => {
+          if (forAdmin && !isAdmin) return;
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={`flex items-center gap-3 rounded-lg px-4 py-3 transition-all duration-200 ${
+                isActive(href)
+                  ? "bg-primary font-medium text-on-primary shadow-sm"
+                  : "text-on-surface-variant hover:bg-surface-container-high"
+              }`}
+            >
+              <Icon size={20} />
+              <span className="font-mono-label text-mono-label uppercase tracking-widest">
+                {label}
+              </span>
+            </Link>
+          );
+        })}
       </div>
 
       {/* Footer actions */}
